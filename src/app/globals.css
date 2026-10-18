@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sora: 'Sora', sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Single light theme only - NO night mode */
+body {
+  background-color: #FFFFFF;
+  color: #14140F;
+  font-family: var(--font-jakarta), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Selection Highlight */
+::selection {
+  background-color: #FFAA1D;
+  color: #0B0B09;
+}
+
+/* Smooth scrolling & reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F5EF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C7C2B4;
+  border-radius: 4px;
+  border: 2px solid #F7F5EF;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6A9A00;
+}
