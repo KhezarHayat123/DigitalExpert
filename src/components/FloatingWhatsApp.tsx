@@ -42,7 +42,7 @@ export default function FloatingWhatsApp({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={"Chat with " + primaryName + " on WhatsApp"}
-          className="relative flex items-center justify-center w-13 h-13 p-3.5 bg-[#25D366] text-white rounded-full border-2 border-de-black shadow-hard hover:bg-de-black hover:text-[#25D366] hover:scale-105 active:scale-95 transition-all duration-200"
+          className="relative flex items-center justify-center w-14 h-14 p-3.5 bg-[#25D366] text-white rounded-full border-2 border-de-black shadow-hard hover:bg-de-black hover:text-[#25D366] hover:scale-105 active:scale-95 transition-all duration-200"
         >
           <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-30 animate-ping pointer-events-none" />
           <MessageCircle className="w-6 h-6 relative z-10 fill-current" />
@@ -66,7 +66,7 @@ export default function FloatingWhatsApp({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={"Chat with " + secondaryName + " on WhatsApp"}
-          className="relative flex items-center justify-center w-13 h-13 p-3.5 bg-[#128C7E] text-white rounded-full border-2 border-de-black shadow-hard hover:bg-de-black hover:text-de-amber hover:scale-105 active:scale-95 transition-all duration-200"
+          className="relative flex items-center justify-center w-14 h-14 p-3.5 bg-[#128C7E] text-white rounded-full border-2 border-de-black shadow-hard hover:bg-de-black hover:text-de-amber hover:scale-105 active:scale-95 transition-all duration-200"
         >
           <MessageCircle className="w-6 h-6 relative z-10 fill-current" />
           <span className="absolute -bottom-1 -right-1 bg-de-black text-de-amber text-[9px] font-extrabold px-1.5 py-0.5 rounded-full border border-white leading-none">
