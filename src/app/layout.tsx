@@ -1,3 +1,4 @@
+import { getSettings } from "@/lib/db";
 import type { Metadata } from "next";
 import { Sora, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
@@ -90,7 +91,17 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
-        <FloatingWhatsApp />
+        {(() => {
+          const settings = getSettings();
+          return (
+            <FloatingWhatsApp
+              primaryPhone={settings.phone || "03124051296"}
+              primaryName={settings.phoneName || "Khezar Hayat"}
+              secondaryPhone={settings.phone2 || "03276159167"}
+              secondaryName={settings.phone2Name || "Umar Farooq"}
+            />
+          );
+        })()}
         <WelcomePopup />
       </body>
     </html>

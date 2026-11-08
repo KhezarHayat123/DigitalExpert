@@ -290,19 +290,22 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
                   )}
                 </div>
                 <div className="flex flex-wrap gap-1.5 mt-2">
-                  <span className="text-[10px] text-de-muted font-bold self-center">Presets:</span>
+                  <span className="text-[10px] text-de-muted font-bold self-center">Quick Select:</span>
                   {[
-                    { label: "Website", url: "/brand/digital-website.jpg" },
-                    { label: "Ads & SEO", url: "/brand/digital-ads-seo.jpg" },
-                    { label: "Social Media", url: "/brand/digital-social-media.jpg" },
-                    { label: "Workspace", url: "/brand/digital-marketing-workspace.png" },
-                    { label: "Academy", url: "/brand/digital-academy.jpg" },
+                    { label: "WordPress", url: "/images/courses/wordpress.jpg" },
+                    { label: "Social Media", url: "/images/courses/social-media.jpg" },
+                    { label: "Google & TikTok Ads", url: "/images/courses/google-tiktok-ads.jpg" },
+                    { label: "Video Ads", url: "/images/courses/video-ads.jpg" },
+                    { label: "SEO Masterclass", url: "/images/courses/seo.jpg" },
+                    { label: "YouTube Automation", url: "/images/courses/youtube-automation.jpg" },
+                    { label: "Agency Workspace", url: "/brand/digital-marketing-workspace.png" },
+                    { label: "Academy HQ", url: "/brand/digital-academy.jpg" },
                   ].map((p) => (
                     <button
                       type="button"
                       key={p.url}
                       onClick={() => setEditingCourse({ ...editingCourse, image: p.url })}
-                      className="px-2 py-0.5 rounded text-[10px] font-bold bg-de-warm border border-de-border hover:bg-white"
+                      className="px-2 py-0.5 rounded text-[10px] font-bold bg-de-warm border border-de-border hover:bg-de-black hover:text-white transition-colors"
                     >
                       {p.label}
                     </button>

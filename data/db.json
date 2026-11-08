@@ -1544,23 +1544,15 @@
     "analyticsId": "",
     "facebookPixelId": "",
     "defaultSeoTitle": "DigitalExpert | Digital Marketing Agency & Training Institute in Bahawalpur",
-    "defaultSeoDescription": "Grow your brand and master digital skills with DigitalExpert. Expert web development, SEO, paid ads, social media, and practical IT training in University Chowk, Bahawalpur."
+    "defaultSeoDescription": "Grow your brand and master digital skills with DigitalExpert. Expert web development, SEO, paid ads, social media, and practical IT training in University Chowk, Bahawalpur.",
+    "phoneName": "Khezar Hayat",
+    "whatsappName": "Khezar Hayat",
+    "phone2": "03276159167",
+    "phone2Name": "Umar Farooq",
+    "whatsapp2": "03276159167",
+    "whatsapp2Name": "Umar Farooq"
   },
   "auditLogs": [
-    {
-      "id": "log-1792317367976-b1uw",
-      "action": "Approve Student",
-      "userEmail": "admin@digitalexpert.pk",
-      "timestamp": "2026-10-18T09:56:07.976Z",
-      "details": "Approved student admin@digitalexpert.pk for course: video-ads"
-    },
-    {
-      "id": "log-1792317295983-7dgv",
-      "action": "Student Signup",
-      "userEmail": "admin@digitalexpert.pk",
-      "timestamp": "2026-10-18T09:54:55.983Z",
-      "details": "Student registered for video-ads (Status: Pending Approval)"
-    },
     {
       "id": "log-1792258814305-6q2o",
       "action": "Update Settings",
@@ -1696,21 +1688,6 @@
     }
   ],
   "students": [
-    {
-      "id": "std-1792317295983-twpgv",
-      "name": "shafaqat",
-      "email": "admin@digitalexpert.pk",
-      "phone": "314075636",
-      "passwordHash": "$2a$10$1UfIPXL4b4He8NbB113zJu8tQob3d57okhcVO6AP7pRZqL8pfr3Y2",
-      "status": "approved",
-      "enrolledCourses": [
-        "video-ads"
-      ],
-      "requestedCourse": "video-ads",
-      "createdAt": "2026-10-18T09:54:55.983Z",
-      "approvedAt": "2026-10-18T09:56:07.976Z",
-      "approvedBy": "admin@digitalexpert.pk"
-    },
     {
       "id": "std-1792258139718-nx3u4",
       "name": "khezar Hayat",

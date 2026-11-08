@@ -75,7 +75,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@digitalexpert.pk"
+                placeholder="admin@domain.com"
                 className="w-full px-4 py-2.5 pl-10 rounded-btn border-2 border-de-border bg-de-warm/50 text-sm font-semibold text-de-body focus:border-de-black focus:outline-none"
               />
               <Mail className="w-4 h-4 text-de-muted absolute left-3.5 top-3.5" />

@@ -39,19 +39,28 @@ export default function ContactPage() {
               </p>
 
               {/* Direct Quick Badges */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
-                  href={`https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, "")}`}
+                  href="https://wa.me/923124051296"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3.5 rounded-btn font-heading font-extrabold text-sm bg-[#25D366] text-white hover:bg-de-black transition-all border-2 border-de-black shadow-hard-sm hover:shadow-hard inline-flex items-center gap-2"
+                  className="px-4 py-3 rounded-btn font-heading font-extrabold text-xs sm:text-sm bg-[#25D366] text-white hover:bg-de-black transition-all border-2 border-de-black shadow-hard-sm hover:shadow-hard inline-flex items-center gap-2"
                 >
                   <Phone className="w-4 h-4 fill-current" />
-                  <span>WhatsApp: {settings.phone}</span>
+                  <span>{settings.phoneName || "Khezar Hayat"}: {settings.phone}</span>
+                </a>
+                <a
+                  href="https://wa.me/923276159167"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-3 rounded-btn font-heading font-extrabold text-xs sm:text-sm bg-de-black text-white hover:bg-de-green transition-all border-2 border-de-black shadow-hard-sm hover:shadow-hard inline-flex items-center gap-2"
+                >
+                  <Phone className="w-4 h-4 text-de-amber fill-current" />
+                  <span>{settings.phone2Name || "Umar Farooq"}: {settings.phone2 || "0327 6159167"}</span>
                 </a>
                 <a
                   href={`mailto:${settings.email}`}
-                  className="px-6 py-3.5 rounded-btn font-heading font-extrabold text-sm bg-white text-de-black hover:bg-de-warm transition-all border-2 border-de-black shadow-hard-sm hover:shadow-hard inline-flex items-center gap-2"
+                  className="px-4 py-3 rounded-btn font-heading font-extrabold text-xs sm:text-sm bg-white text-de-black hover:bg-de-warm transition-all border-2 border-de-black shadow-hard-sm hover:shadow-hard inline-flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4 text-de-green" />
                   <span>{settings.email}</span>
@@ -83,18 +92,52 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left Column (5 cols): Direct Channel Cards with Copy Buttons */}
             <div className="lg:col-span-5 space-y-4">
-              {/* WhatsApp Card */}
+              {/* WhatsApp Card 1: Khezar Hayat */}
               <div className="p-5 rounded-2xl bg-white border-2 border-de-black shadow-hard-sm flex items-center justify-between hover:shadow-hard transition-shadow">
                 <div className="flex items-center gap-3.5">
                   <div className="w-12 h-12 rounded-xl bg-[#25D366] text-white flex items-center justify-center border-2 border-de-black shrink-0">
                     <Phone className="w-6 h-6 fill-current" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold uppercase text-de-muted">WhatsApp / Phone</p>
+                    <p className="text-xs font-bold uppercase text-de-muted">{settings.phoneName || "Khezar Hayat"} (WhatsApp)</p>
                     <p className="font-heading font-extrabold text-base text-de-black">{settings.phone}</p>
                   </div>
                 </div>
-                <CopyChannelButton text={settings.phone} label="Phone" />
+                <div className="flex items-center gap-2">
+                  <a
+                    href="https://wa.me/923124051296"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-btn bg-[#25D366] text-white font-bold text-xs hover:bg-de-black transition-colors"
+                  >
+                    Chat
+                  </a>
+                  <CopyChannelButton text={settings.phone} label="Phone" />
+                </div>
+              </div>
+
+              {/* WhatsApp Card 2: Umar Farooq */}
+              <div className="p-5 rounded-2xl bg-white border-2 border-de-black shadow-hard-sm flex items-center justify-between hover:shadow-hard transition-shadow">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-12 h-12 rounded-xl bg-de-black text-white flex items-center justify-center border-2 border-de-black shrink-0">
+                    <Phone className="w-6 h-6 text-de-amber fill-current" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase text-de-muted">{settings.phone2Name || "Umar Farooq"} (WhatsApp)</p>
+                    <p className="font-heading font-extrabold text-base text-de-black">{settings.phone2 || "0327 6159167"}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="https://wa.me/923276159167"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-btn bg-[#25D366] text-white font-bold text-xs hover:bg-de-black transition-colors"
+                  >
+                    Chat
+                  </a>
+                  <CopyChannelButton text={settings.phone2 || "03276159167"} label="Phone 2" />
+                </div>
               </div>
 
               {/* Email Card */}

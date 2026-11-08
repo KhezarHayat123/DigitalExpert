@@ -187,6 +187,28 @@ export default function Header() {
               })}
             </nav>
             <div className="mt-4 pt-4 border-t border-de-border flex flex-col gap-2">
+              {/* WhatsApp Quick Buttons for Mobile */}
+              <div className="grid grid-cols-2 gap-2 mb-1">
+                <a
+                  href="https://wa.me/923124051296"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2 px-2.5 rounded-btn bg-[#25D366] text-white text-xs font-heading font-extrabold text-center border-2 border-de-black flex items-center justify-center gap-1 shadow-hard-sm"
+                >
+                  <Phone className="w-3.5 h-3.5 fill-current" />
+                  <span>Khezar Hayat</span>
+                </a>
+                <a
+                  href="https://wa.me/923276159167"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2 px-2.5 rounded-btn bg-de-black text-white text-xs font-heading font-extrabold text-center border-2 border-de-black flex items-center justify-center gap-1 shadow-hard-sm"
+                >
+                  <Phone className="w-3.5 h-3.5 text-de-amber fill-current" />
+                  <span>Umar Farooq</span>
+                </a>
+              </div>
+
               <Link
                 href="/lms/login"
                 className="w-full text-center py-2.5 rounded-btn font-extrabold text-sm bg-white text-de-black border-2 border-de-black shadow-hard-sm hover:bg-de-green hover:text-white"

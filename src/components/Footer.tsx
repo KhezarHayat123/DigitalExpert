@@ -170,21 +170,46 @@ export default function Footer() {
               Direct Support
             </h3>
 
-            {/* WhatsApp Highlight Card */}
-            <a
-              href="https://wa.me/923124051296"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group p-4 bg-[#25D366] text-white rounded-2xl border-2 border-de-black shadow-hard-sm transition-all duration-200 hover:bg-de-black hover:shadow-hard flex items-center justify-between"
-            >
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider opacity-90">WhatsApp Support Desk</p>
-                <p className="text-base font-heading font-extrabold">0312 4051296</p>
-              </div>
-              <div className="p-2 bg-white/20 rounded-xl group-hover:bg-[#25D366] transition-colors">
-                <Phone className="w-5 h-5 text-white" />
-              </div>
-            </a>
+            {/* WhatsApp Direct Support (2 Numbers) */}
+            <div className="space-y-2.5">
+              {/* WhatsApp 1: Khezar Hayat */}
+              <a
+                href="https://wa.me/923124051296"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group p-3 bg-[#25D366] text-white rounded-xl border-2 border-de-black shadow-hard-sm transition-all duration-200 hover:bg-de-black hover:shadow-hard flex items-center justify-between"
+              >
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-wider opacity-95 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                    Khezar Hayat
+                  </p>
+                  <p className="text-sm font-heading font-extrabold">0312 4051296</p>
+                </div>
+                <div className="p-1.5 bg-white/20 rounded-lg group-hover:bg-[#25D366] transition-colors">
+                  <Phone className="w-4 h-4 text-white" />
+                </div>
+              </a>
+
+              {/* WhatsApp 2: Umar Farooq */}
+              <a
+                href="https://wa.me/923276159167"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group p-3 bg-de-black text-white rounded-xl border-2 border-de-black shadow-hard-sm transition-all duration-200 hover:bg-[#25D366] hover:shadow-hard flex items-center justify-between"
+              >
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-de-amber group-hover:text-white flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-de-amber group-hover:bg-white" />
+                    Umar Farooq
+                  </p>
+                  <p className="text-sm font-heading font-extrabold">0327 6159167</p>
+                </div>
+                <div className="p-1.5 bg-white/10 rounded-lg group-hover:bg-white/20 transition-colors">
+                  <Phone className="w-4 h-4 text-white" />
+                </div>
+              </a>
+            </div>
 
             {/* Campus Working Hours */}
             <div className="p-3 bg-white rounded-xl border border-de-border text-xs font-bold text-de-body space-y-1">

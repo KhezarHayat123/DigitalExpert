@@ -76,22 +76,82 @@ export default function SettingsManagerClient({ initialSettings }: { initialSett
           General Contact Information
         </h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-bold uppercase text-de-muted mb-1">Phone / WhatsApp</label>
-            <input
-              type="text"
-              value={settings.phone}
-              onChange={(e) => setSettings({ ...settings, phone: e.target.value, whatsapp: e.target.value })}
-              className="w-full p-2.5 rounded-btn border border-de-border text-xs font-semibold focus:border-de-black"
-            />
+        {/* Primary WhatsApp & Phone (Khezar Hayat) */}
+        <div className="p-4 bg-de-warm rounded-xl border border-de-border space-y-3">
+          <p className="font-heading font-extrabold text-xs uppercase text-de-black flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#25D366]" />
+            Primary WhatsApp Desk (Khezar Hayat)
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold uppercase text-de-muted mb-1">Contact Name / Label</label>
+              <input
+                type="text"
+                value={settings.phoneName || "Khezar Hayat"}
+                onChange={(e) => setSettings({ ...settings, phoneName: e.target.value, whatsappName: e.target.value })}
+                placeholder="Khezar Hayat"
+                className="w-full p-2.5 rounded-btn border border-de-border text-xs font-semibold focus:border-de-black bg-white"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold uppercase text-de-muted mb-1">Phone / WhatsApp Number</label>
+              <input
+                type="text"
+                value={settings.phone}
+                onChange={(e) => setSettings({ ...settings, phone: e.target.value, whatsapp: e.target.value })}
+                placeholder="03124051296"
+                className="w-full p-2.5 rounded-btn border border-de-border text-xs font-semibold focus:border-de-black bg-white"
+              />
+            </div>
           </div>
+        </div>
+
+        {/* Secondary WhatsApp & Phone (Umar Farooq) */}
+        <div className="p-4 bg-de-warm rounded-xl border border-de-border space-y-3">
+          <p className="font-heading font-extrabold text-xs uppercase text-de-black flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-de-amber" />
+            Secondary WhatsApp Desk (Umar Farooq)
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold uppercase text-de-muted mb-1">Contact Name / Label</label>
+              <input
+                type="text"
+                value={settings.phone2Name || "Umar Farooq"}
+                onChange={(e) => setSettings({ ...settings, phone2Name: e.target.value, whatsapp2Name: e.target.value })}
+                placeholder="Umar Farooq"
+                className="w-full p-2.5 rounded-btn border border-de-border text-xs font-semibold focus:border-de-black bg-white"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold uppercase text-de-muted mb-1">Phone / WhatsApp Number</label>
+              <input
+                type="text"
+                value={settings.phone2 || "03276159167"}
+                onChange={(e) => setSettings({ ...settings, phone2: e.target.value, whatsapp2: e.target.value })}
+                placeholder="03276159167"
+                className="w-full p-2.5 rounded-btn border border-de-border text-xs font-semibold focus:border-de-black bg-white"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-bold uppercase text-de-muted mb-1">Email Address</label>
             <input
               type="email"
               value={settings.email}
               onChange={(e) => setSettings({ ...settings, email: e.target.value })}
+              className="w-full p-2.5 rounded-btn border border-de-border text-xs font-semibold focus:border-de-black"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-bold uppercase text-de-muted mb-1">Domain</label>
+            <input
+              type="text"
+              value={settings.website}
+              onChange={(e) => setSettings({ ...settings, website: e.target.value })}
               className="w-full p-2.5 rounded-btn border border-de-border text-xs font-semibold focus:border-de-black"
             />
           </div>

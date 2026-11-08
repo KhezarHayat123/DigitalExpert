@@ -183,7 +183,13 @@ export interface SiteSettings {
   siteName: string;
   tagline: string;
   phone: string;
+  phoneName?: string;
   whatsapp: string;
+  whatsappName?: string;
+  phone2?: string;
+  phone2Name?: string;
+  whatsapp2?: string;
+  whatsapp2Name?: string;
   email: string;
   website: string;
   location: string;

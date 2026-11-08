@@ -585,7 +585,15 @@ export default async function HomePage() {
               target="_blank"
             >
               <MessageCircle className="w-5 h-5 mr-1" />
-              Chat on WhatsApp (03124051296)
+              Khezar Hayat (03124051296)
+            </MagneticButton>
+            <MagneticButton
+              href="https://wa.me/923276159167"
+              variant="whatsapp"
+              target="_blank"
+            >
+              <MessageCircle className="w-5 h-5 mr-1" />
+              Umar Farooq (03276159167)
             </MagneticButton>
             <MagneticButton href="/contact" variant="amber">
               Request a Free Quote
