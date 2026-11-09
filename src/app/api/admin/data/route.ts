@@ -18,6 +18,8 @@ import {
   updateSettings,
   saveUser,
   deleteUser,
+  addMediaFile,
+  deleteMediaFile,
 } from "@/lib/db";
 
 export async function GET() {
@@ -54,6 +56,7 @@ export async function POST(req: Request) {
       else if (collection === "pages") savePage(item, admin.email);
       else if (collection === "settings") updateSettings(item, admin.email);
       else if (collection === "users") saveUser(item, admin.email);
+      else if (collection === "media") addMediaFile(item, admin.email);
       else return NextResponse.json({ error: "Invalid collection" }, { status: 400 });
 
       return NextResponse.json({ success: true });
@@ -67,6 +70,7 @@ export async function POST(req: Request) {
       else if (collection === "team") deleteTeamMember(id, admin.email);
       else if (collection === "faqs") deleteFaq(id, admin.email);
       else if (collection === "users") deleteUser(id, admin.email);
+      else if (collection === "media") deleteMediaFile(id, admin.email);
       else return NextResponse.json({ error: "Invalid collection" }, { status: 400 });
 
       return NextResponse.json({ success: true });

@@ -1,6 +1,185 @@
 {
   "courses": [
     {
+      "id": "course-ai-dev",
+      "slug": "ai-web-app-development",
+      "title": "AI-Powered Web & App Development",
+      "shortDescription": "Learn to build professional websites, e-commerce stores, web applications, Android and iOS mobile applications, and custom software using modern AI-powered development tools.",
+      "description": "Master the revolutionary AI development stack! In 2026, the world's most productive software engineers do not write every line of code by hand—they orchestrate intelligent AI coding engines like Cursor AI, Claude 3.5 Sonnet, GitHub Copilot, and v0 to build production-grade web platforms, scalable mobile apps, and custom software in record time. This comprehensive, 100% practical masterclass at University Chowk, Bahawalpur trains you hands-on: from writing your first AI-assisted responsive website and WooCommerce/Shopify store, to building multi-tenant web applications with databases, cross-platform mobile apps for Android and iOS, and publishing live to the Google Play Store.",
+      "level": "All Levels",
+      "duration": "3 Months (36 Hands-on Sessions)",
+      "scheduleText": "3 Days a Week - 6:00 PM to 8:00 PM PKT",
+      "fee": 0,
+      "image": "/brand/digital-website.jpg",
+      "instructor": "Khezar Hayat & Senior Dev Team",
+      "tools": [
+        "Cursor AI",
+        "Claude 3.5 Sonnet",
+        "Next.js 14",
+        "React Native / Flutter",
+        "Tailwind CSS",
+        "Node.js",
+        "Firebase / Supabase",
+        "Google Play Console",
+        "GitHub & Vercel"
+      ],
+      "whatYouWillLearn": [
+        "AI Website Development from prompt to production",
+        "E-Commerce Website Development with Payment Gateways",
+        "Full-Stack Web Application Development with Relational Databases",
+        "Android & iOS Mobile Application Development (Single-Codebase)",
+        "Custom Software & Business ERP Automation Tools",
+        "Mastering AI Coding Tools (Cursor AI, Claude 3.5 Sonnet, GitHub Copilot)",
+        "Comprehensive App Testing, Performance Optimization & Security",
+        "Google Play Store Publishing, Keystores & Review Compliance",
+        "Cloud Website Hosting, Domain DNS Mapping & CI/CD Deployment"
+      ],
+      "modules": [
+        {
+          "id": "mod-ai-1",
+          "title": "Module 1: AI-Powered Modern Website Development",
+          "duration": "2 Weeks",
+          "lectures": [
+            {
+              "title": "Introduction to AI Coding Engines: Cursor AI, Claude 3.5 & Prompt Engineering for Code",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Building Pixel-Perfect Modern Responsive Web Pages with Tailwind CSS & Next.js",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Component Architecture, Hero Sections, and Mobile-First Layouts",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Domain Mapping, Vercel Cloud Deployment & SSL Configuration",
+              "duration": "1.5 hrs"
+            }
+          ]
+        },
+        {
+          "id": "mod-ai-2",
+          "title": "Module 2: E-Commerce Store Architecture & Payments",
+          "duration": "2 Weeks",
+          "lectures": [
+            {
+              "title": "High-Converting E-Commerce Store Structure & Product Taxonomies",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Cart Logic, Checkout Workflows & WhatsApp Order Confirmation Triggers",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Local Payment Gateways: JazzCash, EasyPaisa, and Cash-on-Delivery Setup",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Inventory Management, Shipping Zones & Automated Invoicing",
+              "duration": "1.5 hrs"
+            }
+          ]
+        },
+        {
+          "id": "mod-ai-3",
+          "title": "Module 3: Web Application Development, Databases & APIs",
+          "duration": "2 Weeks",
+          "lectures": [
+            {
+              "title": "Full-Stack Architecture: REST APIs, Serverless Routes & JSON Data Flow",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Database Modeling with PostgreSQL & Supabase / Firebase",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Secure User Authentication, Passwords, and Role-Based Dashboards",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Real-Time CRUD Operations & CSV/PDF Data Exports",
+              "duration": "2 hrs"
+            }
+          ]
+        },
+        {
+          "id": "mod-ai-4",
+          "title": "Module 4: Cross-Platform Mobile App Engineering (Android & iOS)",
+          "duration": "3 Weeks",
+          "lectures": [
+            {
+              "title": "Mobile Development Architecture with Flutter & React Native",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Translating Web Logic to Native Mobile Screens & Touch Gestures",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Connecting Mobile Apps to Backend APIs & Real-Time Sync",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Push Notifications, Offline Storage & Device Hardware Integrations",
+              "duration": "2 hrs"
+            }
+          ]
+        },
+        {
+          "id": "mod-ai-5",
+          "title": "Module 5: Custom Software Engineering & AI Workflows",
+          "duration": "2 Weeks",
+          "lectures": [
+            {
+              "title": "Designing Tailor-Made Business Management Software & POS Systems",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Desktop Application Packaging with Electron",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Barcode Scanning, Thermal Receipt Printing & Inventory Math",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Advanced AI Refactoring, Debugging, and Security Hardening",
+              "duration": "2 hrs"
+            }
+          ]
+        },
+        {
+          "id": "mod-ai-6",
+          "title": "Module 6: App Testing, Deployment & Google Play Store Publishing",
+          "duration": "1 Week",
+          "lectures": [
+            {
+              "title": "Android App Bundle (.AAB) Building, Keystores & Code Signing",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Target SDK 34+ Requirements & Policy Compliance Checks",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Google Play Console Listing: Metadata, Screenshots & Privacy Policies",
+              "duration": "2 hrs"
+            },
+            {
+              "title": "Closed Testing Track Setup & Submitting for Live Production Approval",
+              "duration": "2 hrs"
+            }
+          ]
+        }
+      ],
+      "published": true,
+      "order": 1,
+      "seoTitle": "AI-Powered Web & App Development Course | DigitalExpert Bahawalpur",
+      "seoDescription": "Master AI website development, e-commerce stores, web apps, Android & iOS mobile apps, and Google Play Store publishing with AI tools at DigitalExpert Bahawalpur."
+    },
+    {
       "id": "course-wordpress",
       "slug": "wordpress",
       "title": "WordPress Web Development Mastery",
@@ -1159,6 +1338,667 @@
       "order": 6,
       "seoTitle": "YouTube Automation Agency in Pakistan | DigitalExpert",
       "seoDescription": "Automate and scale your faceless YouTube channels with DigitalExpert. High CPM niches, viral thumbnails, and end-to-end production."
+    },
+    {
+      "id": "srv-biz-web",
+      "slug": "business-website",
+      "name": "Business Website Development",
+      "shortDescription": "High-converting corporate and business websites engineered with modern AI development frameworks, lightning-fast speed, and SEO-ready architecture.",
+      "overview": "Establish an authoritative digital presence for your company or brand. Utilizing state-of-the-art AI development workflows, our agency crafts fully responsive, custom-branded business websites in days rather than months. Every site includes high-converting hero sections, service catalogs, WhatsApp lead funnels, and automated contact pipelines optimized for Pakistani and international clients.",
+      "image": "/brand/digital-website.jpg",
+      "icon": "Globe",
+      "deliverables": [
+        "Custom UI/UX Designed for High Conversions",
+        "Full Mobile, Tablet & Desktop Responsive Layout",
+        "1-Click Direct WhatsApp & Phone Call Triggers",
+        "Automated Lead Capture Contact Inquiries",
+        "Fast Cloud Hosting & Free SSL Security Certificate",
+        "On-Page Technical SEO & Google Search Console Indexing"
+      ],
+      "tools": [
+        "Next.js 14",
+        "React",
+        "Tailwind CSS",
+        "Claude 3.5 Sonnet",
+        "Cursor AI",
+        "WordPress CMS",
+        "Google Analytics 4"
+      ],
+      "processSteps": [
+        {
+          "step": 1,
+          "title": "AI Wireframing & Brand Architecture",
+          "description": "We analyze your industry leaders and generate tailored website wireframes and conversion funnels within 24 hours."
+        },
+        {
+          "step": 2,
+          "title": "Rapid AI-Assisted Component Engineering",
+          "description": "Our senior developers leverage modern AI toolchains to build pixel-perfect, clean code with zero bloat."
+        },
+        {
+          "step": 3,
+          "title": "Cross-Browser & Mobile QA Testing",
+          "description": "Rigorous speed audits ensuring sub-1-second loading times on 4G and broadband networks."
+        },
+        {
+          "step": 4,
+          "title": "Domain DNS Mapping & Live Launch",
+          "description": "Production deployment, SSL encryption, Google indexing, and client dashboard handover."
+        }
+      ],
+      "packages": [
+        {
+          "id": "pkg-biz-1",
+          "name": "Starter Business Site",
+          "price": 25000,
+          "description": "Perfect for startups and local businesses establishing a professional online presence.",
+          "features": [
+            "Up to 5 Custom Pages (Home, About, Services, Contact)",
+            "Mobile-Responsive Modern Agency Design",
+            "Direct WhatsApp & Contact Form Lead Capture",
+            "Free SSL Security & Basic SEO Setup",
+            "Delivery in 5-7 Business Days"
+          ]
+        },
+        {
+          "id": "pkg-biz-2",
+          "name": "Growth Corporate Pro",
+          "price": 40000,
+          "description": "Best for established companies and firms requiring custom branding and CMS.",
+          "features": [
+            "Up to 10 Comprehensive Pages + Blog CMS",
+            "Custom Interactive Animations & Lead Funnels",
+            "Google Analytics 4 & Meta Pixel Setup",
+            "Advanced On-Page Technical SEO",
+            "Speed Optimization (90+ Google PageSpeed)",
+            "Delivery in 7-10 Business Days"
+          ],
+          "isPopular": true
+        },
+        {
+          "id": "pkg-biz-3",
+          "name": "Enterprise Custom Platform",
+          "price": 65000,
+          "description": "For high-scale enterprises demanding custom web features and priority support.",
+          "features": [
+            "Unlimited Pages & Multi-Service Funnels",
+            "Multi-Lingual Capabilities (English / Urdu / Arabic)",
+            "Custom API Integrations & CRM Webhooks",
+            "Enterprise Cloud Infrastructure Setup",
+            "6 Months Dedicated Maintenance & Priority Support"
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Starting price Rs. 25,000 mein kya shamil hai?",
+          "answer": "Starter package Rs. 25,000 mein 5 pages ki mukammal mobile responsive website, contact form, WhatsApp button, basic SEO, aur domain/hosting setup assistance shamil hai."
+        },
+        {
+          "question": "Kya website banne ke baad main khud content change kar sakunga?",
+          "answer": "Ji haan! Hum aapko aasan admin panel faraham karte hain jahan se aap baghair kisi coding ke text, pictures, aur contact details tabdeel kar sakte hain."
+        },
+        {
+          "question": "Website kitne din mein live hogi?",
+          "answer": "AI-accelerated development workflow ki madad se Starter site 5 se 7 din mein aur Corporate site 7 se 10 din mein 100% live ho jati hai."
+        }
+      ],
+      "published": true,
+      "order": 7,
+      "seoTitle": "Business Website Development in Pakistan | Starting Rs. 25,000 | DigitalExpert",
+      "seoDescription": "Get professional AI-accelerated business website development starting from Rs. 25,000. Mobile-responsive, ultra-fast loading, and built to convert visitors into clients."
+    },
+    {
+      "id": "srv-ecom-web",
+      "slug": "ecommerce-website",
+      "name": "E-Commerce Website Development",
+      "shortDescription": "High-velocity online stores with automated local payment gateways, inventory tracking, mobile-first checkout, and AI conversion optimization.",
+      "overview": "Turn site visitors into recurring buyers. We develop high-performance e-commerce stores equipped with JazzCash, EasyPaisa, Bank Alfalah, and Stripe payment gateways. Powered by modern AI product merchandising tools, our stores feature automated invoice generation, WhatsApp order confirmations, discount engines, and real-time stock management.",
+      "image": "/brand/digital-marketing-workspace.png",
+      "icon": "ShoppingCart",
+      "deliverables": [
+        "Complete Product Catalog & Category Taxonomy Setup",
+        "Local Pakistani Payment Gateways (JazzCash, EasyPaisa, Cash on Delivery)",
+        "Automated WhatsApp Order Notification Alerts",
+        "Streamlined 1-Page Mobile-First Checkout Funnel",
+        "Stock Inventory Management & Order Invoicing System",
+        "Customer Account Dashboard & Order Tracking"
+      ],
+      "tools": [
+        "WooCommerce",
+        "Shopify",
+        "Next.js Commerce",
+        "JazzCash API",
+        "EasyPaisa Gateway",
+        "Stripe",
+        "Tailwind CSS"
+      ],
+      "processSteps": [
+        {
+          "step": 1,
+          "title": "Catalog & Category Architecture",
+          "description": "Structuring product categories, attribute filters (sizes, colors), and currency preferences."
+        },
+        {
+          "step": 2,
+          "title": "High-Converting Store Design & Theme",
+          "description": "Crafting frictionless mobile product pages and instant checkout funnels."
+        },
+        {
+          "step": 3,
+          "title": "Payment Gateway & Courier API Integration",
+          "description": "Configuring secure local payment processing (JazzCash/EasyPaisa/COD) and shipping zones."
+        },
+        {
+          "step": 4,
+          "title": "Stress Testing & Store Launch",
+          "description": "Conducting simulated test orders, security audits, and staff training for order fulfillment."
+        }
+      ],
+      "packages": [
+        {
+          "id": "pkg-ecom-1",
+          "name": "Starter Online Store",
+          "price": 45000,
+          "description": "Everything needed to launch and sell physical or digital products online.",
+          "features": [
+            "Up to 50 Products Uploaded & Configured",
+            "Cash on Delivery (COD) + Bank Transfer Setup",
+            "Mobile-Optimized Fast Checkout Flow",
+            "WhatsApp Direct Order Buttons on Products",
+            "Order Management & Customer Email Receipts",
+            "Delivery in 7-10 Business Days"
+          ]
+        },
+        {
+          "id": "pkg-ecom-2",
+          "name": "Pro Brand Store",
+          "price": 75000,
+          "description": "For growing retail brands demanding online card/wallet payments and automations.",
+          "features": [
+            "Up to 250 Products with Variant Filters",
+            "Automated JazzCash & EasyPaisa Gateway Integration",
+            "Automated Abandoned Cart WhatsApp/Email Recovery",
+            "Discount Coupon Engine & Flash Sale Banners",
+            "Courier API Integration (TCS / Trax / Leopards)",
+            "Delivery in 10-14 Business Days"
+          ],
+          "isPopular": true
+        },
+        {
+          "id": "pkg-ecom-3",
+          "name": "Custom Enterprise Marketplace",
+          "price": 120000,
+          "description": "High-scale custom store architecture for high-volume order processing.",
+          "features": [
+            "Unlimited Products & Advanced Multi-Vendor Support",
+            "International Payment Gateways (Stripe / PayPal)",
+            "POS (Point of Sale) Inventory Synchronization",
+            "Dedicated Cloud Server Configuration",
+            "Advanced Fraud Detection & 3 Months Dedicated Maintenance"
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Starting price Rs. 45,000 mein kya kya shamil hai?",
+          "answer": "Starter E-Commerce package Rs. 45,000 mein 50 products ka setup, Cash on Delivery, order management, WhatsApp order buttons, aur mobile responsive design shamil hai."
+        },
+        {
+          "question": "Kya JazzCash aur EasyPaisa direct connect ho jate hain?",
+          "answer": "Ji haan! Hum aapke store ke sath official JazzCash aur EasyPaisa merchant API integrate karte hain taake customers direct mobile wallet ya card se pay kar sakein."
+        },
+        {
+          "question": "Delivery tracking kaise kaam karegi?",
+          "answer": "Customers ko order confirm hote hi tracking ID mil jati hai, aur courier company ke portal se status live track ho sakta hai."
+        }
+      ],
+      "published": true,
+      "order": 8,
+      "seoTitle": "E-Commerce Website Development in Pakistan | Starting Rs. 45,000 | DigitalExpert",
+      "seoDescription": "Launch a high-converting online store starting at Rs. 45,000. Complete with JazzCash, EasyPaisa, Cash on Delivery, and automated WhatsApp order notifications."
+    },
+    {
+      "id": "srv-webapp",
+      "slug": "web-app-development",
+      "name": "Web Application Development",
+      "shortDescription": "Custom SaaS platforms, client portals, cloud dashboards, and automated web apps built with AI-assisted software engineering.",
+      "overview": "Transform complex business operations into fast, cloud-based web applications. Our agency builds custom web portals, customer relationship managers (CRMs), school/institute portals, and SaaS MVPs. By leveraging cutting-edge AI code engines combined with strict human software engineering, we deliver robust full-stack applications 3x faster with rock-solid security and scalable databases.",
+      "image": "/brand/digital-ads-seo.jpg",
+      "icon": "Code2",
+      "deliverables": [
+        "Full-Stack Frontend & Backend Web Architecture",
+        "Multi-Role Authentication (Admin, Staff, Customer, Student)",
+        "Relational Database Schema (PostgreSQL / MySQL / MongoDB)",
+        "RESTful API & Serverless Cloud Functions",
+        "Interactive Data Visualizations & Analytics Dashboards",
+        "Strict Role-Based Access Control (RBAC) & Security Hardening"
+      ],
+      "tools": [
+        "Next.js 14 App Router",
+        "React 18",
+        "TypeScript",
+        "Node.js",
+        "PostgreSQL",
+        "Prisma / Supabase",
+        "Cursor AI",
+        "Docker"
+      ],
+      "processSteps": [
+        {
+          "step": 1,
+          "title": "System Architecture & Schema Design",
+          "description": "Entity-relationship modeling, user permission hierarchy, and API endpoint blueprints."
+        },
+        {
+          "step": 2,
+          "title": "AI-Accelerated Full-Stack Build",
+          "description": "Rapid scaffolding of database models, backend logic, and responsive UI components."
+        },
+        {
+          "step": 3,
+          "title": "Automated Unit & Security Testing",
+          "description": "Authentication penetration testing, database index optimization, and edge routing tests."
+        },
+        {
+          "step": 4,
+          "title": "Cloud Server Deployment & CI/CD",
+          "description": "Deployment on Vercel, AWS or VPS with automated database backups and zero-downtime updates."
+        }
+      ],
+      "packages": [
+        {
+          "id": "pkg-webapp-1",
+          "name": "MVP Web Application",
+          "price": 60000,
+          "description": "Core software build to validate an idea or automate a primary company workflow.",
+          "features": [
+            "Core Database Schema & Secure JWT Authentication",
+            "Up to 2 User Roles (e.g. Admin & Client)",
+            "CRUD Operations (Create, Read, Update, Delete records)",
+            "Data Export to CSV / PDF Reports",
+            "Responsive Dashboard UI",
+            "Delivery in 10-14 Business Days"
+          ]
+        },
+        {
+          "id": "pkg-webapp-2",
+          "name": "Business SaaS Platform",
+          "price": 110000,
+          "description": "Comprehensive web application with multiple workflows, user roles, and reporting.",
+          "features": [
+            "Multi-Tenant User Management & Role Hierarchy",
+            "Automated Email & WhatsApp Notifications via Webhooks",
+            "Interactive Charting & Financial Analytics",
+            "Third-Party API Integrations (Payments, SMS, Cloud Storage)",
+            "Audit Logging & Activity Monitoring",
+            "Delivery in 15-20 Business Days"
+          ],
+          "isPopular": true
+        },
+        {
+          "id": "pkg-webapp-3",
+          "name": "Enterprise Cloud System",
+          "price": 180000,
+          "description": "Scalable enterprise software engineered for high concurrency and heavy database usage.",
+          "features": [
+            "Microservices or Modular Cloud Architecture",
+            "Automated CI/CD Deployment Pipeline",
+            "Advanced Encryption & Security Compliance",
+            "Dedicated Database Indexing & Caching Layers",
+            "3 Months SLA Technical Maintenance & Staff Training"
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Starting price Rs. 60,000 mein kya shamil hai?",
+          "answer": "Starting package Rs. 60,000 mein custom database, user authentication (login/signup), role-based dashboard, aur core business operations ka web app shamil hai."
+        },
+        {
+          "question": "Web application website se kaise mukhtalif hoti hai?",
+          "answer": "Website aam taur par company ki information show karne ke liye hoti hai, jabke Web App ek software hota hai jismein users login karte hain, data save karte hain, reports generate karte hain, aur business automate hota hai."
+        },
+        {
+          "question": "Kya ye software mobile browser par bhi theek chalega?",
+          "answer": "Ji bilkul! Hamari banai gayi har web application 100% mobile responsive hoti hai aur kisi bhi smartphone par application ki tarah tez chalti hai."
+        }
+      ],
+      "published": true,
+      "order": 9,
+      "seoTitle": "Custom Web Application Development | Starting Rs. 60,000 | DigitalExpert",
+      "seoDescription": "Build custom SaaS platforms, portals, and management dashboards starting at Rs. 60,000. High-performance, secure, and delivered 3x faster with AI workflows."
+    },
+    {
+      "id": "srv-mobapp",
+      "slug": "mobile-app-development",
+      "name": "Mobile App Development (Android & iOS)",
+      "shortDescription": "Native-grade cross-platform Android and iOS mobile applications built with Flutter and React Native, featuring real-time sync and push notifications.",
+      "overview": "Launch your smartphone app on millions of devices. We engineer modern cross-platform mobile apps for Android and iOS using single-codebase frameworks (Flutter & React Native) accelerated with AI toolchains. From e-commerce and on-demand delivery apps to community portals and booking engines, we deliver fluid 60FPS UI, instant push notifications, camera/location integrations, and offline caching.",
+      "image": "/brand/digital-academy.jpg",
+      "icon": "Smartphone",
+      "deliverables": [
+        "Cross-Platform Native Build for Android (.AAB) & iOS (.IPA)",
+        "Clean Figma-to-Code Mobile UI/UX Implementation",
+        "Real-Time Firebase Database & Cloud Storage",
+        "OneSignal / FCM Automated Push Notifications",
+        "Device Hardware Integration (Camera, GPS Location, Biometrics)",
+        "Production Play Store & App Store Publishing Preparation"
+      ],
+      "tools": [
+        "Flutter",
+        "React Native",
+        "Dart / TypeScript",
+        "Firebase",
+        "Node.js Backend",
+        "Android Studio",
+        "Xcode",
+        "Cursor AI"
+      ],
+      "processSteps": [
+        {
+          "step": 1,
+          "title": "Mobile Wireframing & UX Flow",
+          "description": "Mapping user journeys, touch interactions, splash screens, and native navigation patterns."
+        },
+        {
+          "step": 2,
+          "title": "Cross-Platform Code Engineering",
+          "description": "Building shared business logic, state management, and real-time backend API synchronization."
+        },
+        {
+          "step": 3,
+          "title": "Device Lab Testing & Optimization",
+          "description": "Testing on multiple physical Android and iOS devices for battery efficiency, responsiveness, and speed."
+        },
+        {
+          "step": 4,
+          "title": "App Bundling & Store Readiness",
+          "description": "Generating release keystores, signing release bundles, and preparing app store assets."
+        }
+      ],
+      "packages": [
+        {
+          "id": "pkg-mob-1",
+          "name": "Starter Cross-Platform App",
+          "price": 100000,
+          "description": "Dual Android & iOS mobile app for businesses launching their first mobile presence.",
+          "features": [
+            "Cross-Platform Android & iOS Codebase (Flutter / React Native)",
+            "User Registration, Phone OTP / Social Login",
+            "Core Feature Screens (Up to 8 interactive screens)",
+            "Firebase Backend & Database Sync",
+            "Push Notifications Setup",
+            "Delivery in 15-20 Business Days"
+          ]
+        },
+        {
+          "id": "pkg-mob-2",
+          "name": "Pro Feature Mobile App",
+          "price": 160000,
+          "description": "Advanced mobile app with payment gateways, map tracking, and live chat.",
+          "features": [
+            "Up to 15 Complex Mobile Screens",
+            "In-App Payment Gateway Integration (JazzCash / Stripe)",
+            "Google Maps GPS Live Location Tracking",
+            "Real-Time Chat & Customer Support System",
+            "Admin Web Dashboard to manage app content & users",
+            "Delivery in 20-30 Business Days"
+          ],
+          "isPopular": true
+        },
+        {
+          "id": "pkg-mob-3",
+          "name": "Complete Mobile Ecosystem",
+          "price": 250000,
+          "description": "Full-scale custom mobile ecosystem (User App + Driver/Vendor App + Admin Super-Panel).",
+          "features": [
+            "Multiple Interconnected Mobile Apps (e.g. Customer + Partner)",
+            "Real-Time WebSockets for Instant Status Updates",
+            "Custom Scalable Node.js Backend Server",
+            "Google Play & Apple App Store Submission Included",
+            "3 Months Dedicated Performance Monitoring & Bug Support"
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Starting price Rs. 100,000 mein Android aur iOS dono bante hain?",
+          "answer": "Ji haan! Modern Flutter / React Native technology ki madad se ek hi high-performance codebase se Android aur iPhone (iOS) dono ke liye native app banti hai."
+        },
+        {
+          "question": "Kya app play store par live hogi?",
+          "answer": "Ji haan! Hum complete signed .AAB file tayyar karke dete hain aur hamari team Play Store aur App Store par publish karne mein mukammal support faraham karti hai."
+        },
+        {
+          "question": "App banne ke baad update kaise hogi?",
+          "answer": "Backend content aur data aapke web admin panel se live update hota hai, jiske liye users ko dobara app update karne ki zaroorat nahi parti."
+        }
+      ],
+      "published": true,
+      "order": 10,
+      "seoTitle": "Mobile App Development (Android & iOS) | Starting Rs. 100,000 | DigitalExpert",
+      "seoDescription": "Build fast, scalable Android and iOS mobile applications starting from Rs. 100,000. Single-codebase Flutter/React Native development with push notifications and modern UI."
+    },
+    {
+      "id": "srv-custom-soft",
+      "slug": "custom-software-development",
+      "name": "Custom Software Development",
+      "shortDescription": "Tailor-made internal business management systems, POS billing, warehouse inventory ERPs, and automation suites engineered for your operations.",
+      "overview": "Generic off-the-shelf software often slows your business down. We build bespoke desktop, web, and cloud software engineered precisely around your organization's workflow. Whether you need Point of Sale (POS) software, factory inventory management, multi-branch accounting, or workflow automation scripts, our AI-assisted development model delivers custom software at a fraction of legacy agency timelines and costs.",
+      "image": "/brand/digital-website.jpg",
+      "icon": "Cpu",
+      "deliverables": [
+        "Tailored Business Logic Coded Exactly to Your Operations",
+        "Offline-Capable Desktop Software (Windows/Mac) or Cloud SaaS",
+        "Multi-Branch Stock Synchronization & Thermal Receipt Printing",
+        "Role-Based Employee Security & Audit Trail Logs",
+        "Automated Excel / PDF Ledger & Tax Report Generation",
+        "On-Site or Remote Staff Training & User Manuals"
+      ],
+      "tools": [
+        "Electron",
+        "Node.js",
+        "React / Next.js",
+        "PostgreSQL / SQLite",
+        "Python",
+        "Tailwind CSS",
+        "Cursor AI"
+      ],
+      "processSteps": [
+        {
+          "step": 1,
+          "title": "Business Workflow Discovery",
+          "description": "We analyze your exact invoices, ledgers, inventory math, and staff roles to draft functional specifications."
+        },
+        {
+          "step": 2,
+          "title": "Bespoke Database & UI Engineering",
+          "description": "Designing intuitive high-speed data entry screens with keyboard shortcuts for rapid cashier/operator use."
+        },
+        {
+          "step": 3,
+          "title": "Stress Testing with Historical Data",
+          "description": "Importing existing Excel sheets, validating balance sheets, and stress testing with tens of thousands of stock items."
+        },
+        {
+          "step": 4,
+          "title": "Installation, Training & Go-Live",
+          "description": "Local workstation installation, backup configuration, and comprehensive staff walkthrough."
+        }
+      ],
+      "packages": [
+        {
+          "id": "pkg-soft-1",
+          "name": "Workflow Automation Suite",
+          "price": 75000,
+          "description": "Automate manual spreadsheets, invoicing, client ledgers, and reporting tasks.",
+          "features": [
+            "Custom Software Tool Built for Your Specific Workflow",
+            "Fast Data Entry Forms with Keyboard Shortcuts",
+            "Automated PDF Invoicing & WhatsApp Share",
+            "Excel Import & Export Capabilities",
+            "Single-Branch Offline or Local Network Setup",
+            "Delivery in 10-15 Business Days"
+          ]
+        },
+        {
+          "id": "pkg-soft-2",
+          "name": "Custom ERP / POS Management System",
+          "price": 130000,
+          "description": "Complete retail, wholesale, or service management software with inventory and accounting.",
+          "features": [
+            "Full Inventory Management (Low Stock Alerts & Barcode Scanning)",
+            "Point of Sale (POS) with Thermal Receipt Printing",
+            "Customer & Supplier Ledger Accounts",
+            "Staff Permissions & Shift Cash Balance Closing",
+            "Daily, Monthly, and Annual Profit/Loss Analytics",
+            "Delivery in 18-25 Business Days"
+          ],
+          "isPopular": true
+        },
+        {
+          "id": "pkg-soft-3",
+          "name": "Enterprise Multi-Branch Suite",
+          "price": 210000,
+          "description": "Multi-location software with centralized cloud sync, automated backups, and custom analytics.",
+          "features": [
+            "Centralized Cloud Database with Multi-Branch Live Sync",
+            "Advanced Multi-Level Approval Hierarchies",
+            "Custom Automated Nightly Backups (Local + Cloud)",
+            "Mobile Companion App for Owner / Director Analytics",
+            "6 Months Dedicated Maintenance & Lifetime Bug Warranty"
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Starting price Rs. 75,000 mein kis qisam ka software milta hai?",
+          "answer": "Starting package Rs. 75,000 mein business workflow automation, custom invoicing, client accounts ledger, aur manual Excel data ko automate karne wala software tayyar hota hai."
+        },
+        {
+          "question": "Kya software internet ke baghair (offline) chal sakta hai?",
+          "answer": "Ji haan! Hum offline desktop software (Windows PC) aur local network par chalne wale systems banate hain jinko daily use ke liye internet ki zaroorat nahi hoti."
+        },
+        {
+          "question": "Kya hamara purana Excel data naye software mein transfer ho jayega?",
+          "answer": "Ji bilkul! Hamari team aapka tamam purana inventory aur client records naye software mein free import kar ke degi."
+        }
+      ],
+      "published": true,
+      "order": 11,
+      "seoTitle": "Custom Software & ERP Development | Starting Rs. 75,000 | DigitalExpert",
+      "seoDescription": "Tailor-made business software, POS systems, inventory management, and ERP tools starting at Rs. 75,000. Built specifically for your business workflow."
+    },
+    {
+      "id": "srv-app-deploy",
+      "slug": "app-deployment",
+      "name": "App Deployment & Play Store Publishing",
+      "shortDescription": "End-to-end app testing, signed bundle preparation, Google Play Console listing optimization, and publishing assistance.",
+      "overview": "Navigating Google Play Store policies and technical requirements can be daunting. Our publishing engineers take care of the entire process from release build optimization to store acceptance. We handle Android App Bundle (.AAB) generation, cryptographic keystore security, 64-bit compliance, target API level upgrades, mandatory 14-day / 20-tester closed testing coordination, privacy policy generation, and Play Store graphics formatting.",
+      "image": "/brand/digital-marketing-workspace.png",
+      "icon": "Rocket",
+      "deliverables": [
+        "Release Keystore Generation & Secure Cryptographic Signing",
+        "Google Play Policy Compliance & Target API 34+ Verification",
+        "Privacy Policy Generation & Data Safety Form Documentation",
+        "Play Store Screenshot Formatting (Phone, 7-inch & 10-inch Tablet)",
+        "Store Listing Optimization (App Title, Short Description, High-Ranking Keywords)",
+        "Submission & Rejection Resolution Support"
+      ],
+      "tools": [
+        "Google Play Console",
+        "Firebase App Distribution",
+        "Android Studio",
+        "Fastlane",
+        "Keytool",
+        "Play Asset Delivery"
+      ],
+      "processSteps": [
+        {
+          "step": 1,
+          "title": "App Build & Policy Audit",
+          "description": "We inspect your APK/AAB for permission compliance, target SDK requirements, and store guideline violations."
+        },
+        {
+          "step": 2,
+          "title": "Listing Assets & Data Safety",
+          "description": "Drafting policy-compliant Privacy Policy, App Data Safety declarations, and high-resolution store graphics."
+        },
+        {
+          "step": 3,
+          "title": "Closed Testing Track Management",
+          "description": "Configuring closed testing tracks and managing tester feedback requirements required by Google."
+        },
+        {
+          "step": 4,
+          "title": "Production Submission & Launch",
+          "description": "Final rollout submission to Google Play review team, monitoring status until approved and live."
+        }
+      ],
+      "packages": [
+        {
+          "id": "pkg-deploy-1",
+          "name": "Google Play Publishing Assistance",
+          "price": 15000,
+          "description": "App testing, build preparation, Google Play Store listing, submission, and publishing assistance.",
+          "features": [
+            "Release .AAB Build Inspection & Signature Verification",
+            "Target API 34+ & 64-bit Architecture Check",
+            "Play Store Listing Setup (Metadata, Description & Keywords)",
+            "Compliant Privacy Policy Generation & Hosting",
+            "Data Safety Section Completion",
+            "Submission & Review Tracking Support",
+            "Note: Rs. 15,000 is our service fee only. Google $25 one-time developer registration fee and app development are separate."
+          ]
+        },
+        {
+          "id": "pkg-deploy-2",
+          "name": "Dual Store (Play Store + App Store)",
+          "price": 28000,
+          "description": "Complete submission and publishing support for both Google Play and Apple App Store.",
+          "features": [
+            "Full Google Play Store Setup & Publishing Assistance",
+            "Apple App Store Connect Setup & TestFlight Configuration",
+            "iOS App Store Screenshot & Metadata Preparation",
+            "Apple Guidelines Review & Privacy Compliance Check",
+            "Rejection Dispute & Revision Support",
+            "Note: Apple $99/year and Google $25 one-time developer accounts are separate."
+          ],
+          "isPopular": true
+        },
+        {
+          "id": "pkg-deploy-3",
+          "name": "Publishing + Server Cloud Deployment",
+          "price": 40000,
+          "description": "Complete app store release plus cloud backend deployment (Node/Python/PHP backend).",
+          "features": [
+            "Full Dual App Store Publishing (Android & iOS)",
+            "Production Backend Server Setup on Cloud (VPS / AWS / Vercel)",
+            "SSL Certificate Configuration & Custom Domain API Binding",
+            "Automated Production Database Backups",
+            "Live Server Health Monitoring & Uptime Alerts"
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Starting price Rs. 15,000 mein kya shamil hai?",
+          "answer": "Rs. 15,000 sirf hamari technical deployment aur Google Play Store publishing assistance ki service fee hai. Ismein app testing, .AAB build preparation, listing, privacy policy, aur store submission assistance shamil hai."
+        },
+        {
+          "question": "Google Play Developer Account ki fees kismein aati hai?",
+          "answer": "Google Play Console ka account register karne ke liye Google ki apni ek dafa ki $25 fee hoti hai jo client apne credit/debit card se ada karta hai. Rs. 15,000 hamari service fee hai."
+        },
+        {
+          "question": "Agar Google app reject kar de to kya hoga?",
+          "answer": "Hamari team Google ke reject reason ko analyze karke policy issue fix karwati hai aur app ko dobara submit kar ke approve karwane mein mukammal support deti hai."
+        }
+      ],
+      "published": true,
+      "order": 12,
+      "seoTitle": "Google Play Store App Publishing Service | Starting Rs. 15,000 | DigitalExpert",
+      "seoDescription": "Professional Google Play Store app deployment and publishing assistance starting at Rs. 15,000. App testing, listing setup, policy compliance, and submission support."
     }
   ],
   "projects": [

@@ -5,7 +5,7 @@ import Marquee from "@/components/Marquee";
 import SectionHeader from "@/components/SectionHeader";
 import MagneticButton from "@/components/MagneticButton";
 import Card3DTilt from "@/components/Card3DTilt";
-import { Laptop, Search, Share2, Target, Video, Youtube, CheckCircle2, MessageCircle } from "lucide-react";
+import { Laptop, Search, Share2, Target, Video, Youtube, CheckCircle2, MessageCircle, Globe, ShoppingCart, Code2, Smartphone, Cpu, Rocket } from "lucide-react";
 
 export const metadata = {
   title: "Digital Marketing Services in Bahawalpur | DigitalExpert",
@@ -19,6 +19,12 @@ const SERVICE_ICONS: Record<string, any> = {
   "google-tiktok-ads": Target,
   "video-ads": Video,
   "youtube-automation": Youtube,
+  "business-website": Globe,
+  "ecommerce-website": ShoppingCart,
+  "web-app-development": Code2,
+  "mobile-app-development": Smartphone,
+  "custom-software-development": Cpu,
+  "app-deployment": Rocket,
 };
 
 export default function ServicesPage() {

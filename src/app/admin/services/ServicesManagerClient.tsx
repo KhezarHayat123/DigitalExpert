@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Service, ServicePackage } from "@/lib/types";
-import { Edit2, ExternalLink, CheckCircle2 } from "lucide-react";
+import { Edit2, ExternalLink, CheckCircle2, Upload } from "lucide-react";
 
 export default function ServicesManagerClient({ initialServices }: { initialServices: Service[] }) {
   const [services, setServices] = useState<Service[]>(initialServices);
@@ -132,32 +132,70 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-de-muted mb-1">Service Card Image URL</label>
+                <label className="block text-xs font-bold uppercase text-de-muted mb-1">Service Card Image (Upload or Select)</label>
                 <div className="flex items-center gap-3">
                   <input
                     type="text"
                     value={selectedService.image || ""}
                     onChange={(e) => setSelectedService({ ...selectedService, image: e.target.value })}
-                    placeholder="/brand/digital-ads-seo.jpg"
+                    placeholder="/brand/digital-ads-seo.jpg or choose from PC below"
                     className="flex-1 p-2.5 rounded-btn border border-de-border text-xs font-semibold focus:border-de-black"
                   />
                   {selectedService.image && (
-                    <div className="relative w-12 h-10 rounded border border-de-black overflow-hidden shrink-0">
-                      <Image src={selectedService.image} alt="Preview" fill className="object-cover" />
+                    <div className="relative w-14 h-11 rounded border-2 border-de-black overflow-hidden shrink-0 shadow-sm">
+                      <Image
+                        src={selectedService.image}
+                        alt="Preview"
+                        fill
+                        unoptimized={selectedService.image.startsWith("data:")}
+                        className="object-cover"
+                      />
                     </div>
                   )}
                 </div>
+
+                {/* Direct PC Image Upload */}
+                <div className="mt-2.5 flex items-center gap-2">
+                  <input
+                    type="file"
+                    id="admin-service-file-upload"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                        setSelectedService({ ...selectedService, image: reader.result as string });
+                      };
+                      reader.readAsDataURL(file);
+                    }}
+                  />
+                  <label
+                    htmlFor="admin-service-file-upload"
+                    className="px-3 py-1.5 rounded-btn bg-de-black text-white hover:bg-de-green text-[11px] font-bold cursor-pointer inline-flex items-center gap-1.5 transition-colors border border-de-black"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload Image from Computer</span>
+                  </label>
+                  <span className="text-[10px] text-de-muted font-bold">Pick any JPG, PNG or WebP</span>
+                </div>
+
                 <div className="flex flex-wrap gap-1.5 mt-2">
-                  <span className="text-[10px] text-de-muted font-bold self-center">Quick Select:</span>
+                  <span className="text-[10px] text-de-muted font-bold self-center">Presets:</span>
                   {[
+                    { label: "Business Website", url: "/brand/digital-website.jpg" },
+                    { label: "E-Commerce", url: "/brand/digital-marketing-workspace.png" },
+                    { label: "Web App Dev", url: "/brand/digital-ads-seo.jpg" },
+                    { label: "Mobile Apps", url: "/brand/digital-academy.jpg" },
+                    { label: "Custom Software", url: "/brand/digital-website.jpg" },
+                    { label: "Play Store Publishing", url: "/brand/digital-marketing-workspace.png" },
                     { label: "WordPress Dev", url: "/images/services/wordpress.jpg" },
-                    { label: "Social Media Growth", url: "/images/services/social-media.jpg" },
+                    { label: "Social Media", url: "/images/services/social-media.jpg" },
                     { label: "Google & TikTok Ads", url: "/images/services/google-tiktok-ads.jpg" },
-                    { label: "Commercial Video Ads", url: "/images/services/video-ads.jpg" },
+                    { label: "Commercial Video", url: "/images/services/video-ads.jpg" },
                     { label: "SEO & Traffic", url: "/images/services/seo.jpg" },
                     { label: "YouTube Automation", url: "/images/services/youtube-automation.jpg" },
-                    { label: "Agency Workspace", url: "/brand/digital-marketing-workspace.png" },
-                    { label: "Client Meeting", url: "/brand/digital-academy.jpg" },
                   ].map((p) => (
                     <button
                       type="button"

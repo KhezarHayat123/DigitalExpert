@@ -113,8 +113,14 @@ export default function CoursesFilterList({ initialCourses }: { initialCourses: 
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-wider text-de-muted">Course Fee</p>
                     <p className="font-heading font-extrabold text-xl text-de-black">
-                      {course.fee.toLocaleString()}{" "}
-                      <span className="text-xs font-bold text-de-green">PKR</span>
+                      {course.fee > 0 ? (
+                        <>
+                          {course.fee.toLocaleString()}{" "}
+                          <span className="text-xs font-bold text-de-green">PKR</span>
+                        </>
+                      ) : (
+                        <span className="text-sm font-extrabold text-de-green">Contact for Fee</span>
+                      )}
                     </p>
                   </div>
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Course } from "@/lib/types";
-import { Plus, Edit2, Trash2, Check, X, Clock, ExternalLink } from "lucide-react";
+import { Plus, Edit2, Trash2, Check, X, Clock, ExternalLink, Upload } from "lucide-react";
 
 export default function CoursesManagerClient({ initialCourses }: { initialCourses: Course[] }) {
   const [courses, setCourses] = useState<Course[]>(initialCourses);
@@ -274,24 +274,59 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase text-de-muted mb-1">Course Card Image URL</label>
+                <label className="block text-xs font-bold uppercase text-de-muted mb-1">Course Card Image (Upload or Select)</label>
                 <div className="flex items-center gap-3">
                   <input
                     type="text"
                     value={editingCourse.image || ""}
                     onChange={(e) => setEditingCourse({ ...editingCourse, image: e.target.value })}
-                    placeholder="/brand/digital-website.jpg"
+                    placeholder="/brand/digital-website.jpg or upload your own image below"
                     className="flex-1 p-2.5 rounded-btn border border-de-border text-xs font-semibold focus:border-de-black"
                   />
                   {editingCourse.image && (
-                    <div className="relative w-12 h-10 rounded border border-de-black overflow-hidden shrink-0">
-                      <Image src={editingCourse.image} alt="Preview" fill className="object-cover" />
+                    <div className="relative w-14 h-11 rounded border-2 border-de-black overflow-hidden shrink-0 shadow-sm">
+                      <Image
+                        src={editingCourse.image}
+                        alt="Preview"
+                        fill
+                        unoptimized={editingCourse.image.startsWith("data:")}
+                        className="object-cover"
+                      />
                     </div>
                   )}
                 </div>
+
+                {/* Direct PC Image Upload */}
+                <div className="mt-2.5 flex items-center gap-2">
+                  <input
+                    type="file"
+                    id="admin-course-file-upload"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                        setEditingCourse({ ...editingCourse, image: reader.result as string });
+                      };
+                      reader.readAsDataURL(file);
+                    }}
+                  />
+                  <label
+                    htmlFor="admin-course-file-upload"
+                    className="px-3 py-1.5 rounded-btn bg-de-black text-white hover:bg-de-green text-[11px] font-bold cursor-pointer inline-flex items-center gap-1.5 transition-colors border border-de-black"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload Image from Computer</span>
+                  </label>
+                  <span className="text-[10px] text-de-muted font-bold">Pick any JPG, PNG or WebP</span>
+                </div>
+
                 <div className="flex flex-wrap gap-1.5 mt-2">
-                  <span className="text-[10px] text-de-muted font-bold self-center">Quick Select:</span>
+                  <span className="text-[10px] text-de-muted font-bold self-center">Presets:</span>
                   {[
+                    { label: "AI Development", url: "/brand/digital-website.jpg" },
                     { label: "WordPress", url: "/images/courses/wordpress.jpg" },
                     { label: "Social Media", url: "/images/courses/social-media.jpg" },
                     { label: "Google & TikTok Ads", url: "/images/courses/google-tiktok-ads.jpg" },

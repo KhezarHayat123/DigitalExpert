@@ -18,6 +18,12 @@ import {
   HelpCircle,
   Clock,
   Sparkles,
+  Globe,
+  ShoppingCart,
+  Code2,
+  Smartphone,
+  Cpu,
+  Rocket,
 } from "lucide-react";
 
 export async function generateStaticParams() {
@@ -32,6 +38,12 @@ const SERVICE_ICONS: Record<string, any> = {
   "google-tiktok-ads": Target,
   "video-ads": Video,
   "youtube-automation": Youtube,
+  "business-website": Globe,
+  "ecommerce-website": ShoppingCart,
+  "web-app-development": Code2,
+  "mobile-app-development": Smartphone,
+  "custom-software-development": Cpu,
+  "app-deployment": Rocket,
 };
 
 export default async function ServiceDetailPage({ params }: { params: { slug: string } }) {
