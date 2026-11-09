@@ -28,11 +28,15 @@ const PRIVATE_UPLOADS_DIR = path.join(DATA_DIR, "private-uploads");
 
 // Ensure data directories exist
 function ensureDirs() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
-  if (!fs.existsSync(PRIVATE_UPLOADS_DIR)) {
-    fs.mkdirSync(PRIVATE_UPLOADS_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+    if (!fs.existsSync(PRIVATE_UPLOADS_DIR)) {
+      fs.mkdirSync(PRIVATE_UPLOADS_DIR, { recursive: true });
+    }
+  } catch {
+    // Ignore read-only filesystem errors in cloud environments
   }
 }
 
@@ -83,9 +87,13 @@ export function getDatabase(): DatabaseSchema {
 export function saveDatabase(data: DatabaseSchema): void {
   ensureDirs();
   memoryDb = data;
-  const tempFile = `${DB_FILE}.tmp.${Date.now()}`;
-  fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), "utf-8");
-  fs.renameSync(tempFile, DB_FILE);
+  try {
+    const tempFile = `${DB_FILE}.tmp.${Date.now()}`;
+    fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), "utf-8");
+    fs.renameSync(tempFile, DB_FILE);
+  } catch (err) {
+    console.warn("Could not write database to disk (likely read-only runtime environment):", err);
+  }
 }
 
 // Courses

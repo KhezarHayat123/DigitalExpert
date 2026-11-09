@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Service, ServicePackage } from "@/lib/types";
+import { compressImage } from "@/lib/imageCompression";
 import { Edit2, ExternalLink, CheckCircle2, Upload } from "lucide-react";
 
 export default function ServicesManagerClient({ initialServices }: { initialServices: Service[] }) {
@@ -161,16 +162,15 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
                     id="admin-service-file-upload"
                     accept="image/*"
                     className="hidden"
-                    onChange={(e) => {
+                    onChange={async (e) => {
                       const file = e.target.files?.[0];
                       if (!file) return;
-                      const reader = new FileReader();
-                      reader.onload = () => {
-                        if (reader.result) {
-                          setSelectedService((prev) => (prev ? { ...prev, image: reader.result as string } : null));
-                        }
-                      };
-                      reader.readAsDataURL(file);
+                      try {
+                        const optimizedUrl = await compressImage(file, 1200, 0.82);
+                        setSelectedService((prev) => (prev ? { ...prev, image: optimizedUrl } : null));
+                      } catch (err: any) {
+                        alert("Image processing error: " + err.message);
+                      }
                     }}
                   />
                   <label

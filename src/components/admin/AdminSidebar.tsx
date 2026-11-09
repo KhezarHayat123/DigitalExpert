@@ -82,7 +82,7 @@ export default function AdminSidebar({
     { name: "Projects", href: "/admin/projects", icon: FolderGit2, editorOnly: true },
     { name: "Pages (CMS)", href: "/admin/pages", icon: FileText, editorOnly: true },
     { name: "Team Members", href: "/admin/team", icon: Users, editorOnly: true },
-    { name: "Testimonials", href: "/admin/testimonials", icon: Quote, editorOnly: true },
+    { name: "Feedback & Reviews", href: "/admin/testimonials", icon: Quote, editorOnly: true },
     { name: "FAQs", href: "/admin/faqs", icon: HelpCircle, editorOnly: true },
     { name: "Media Library", href: "/admin/media", icon: ImageIcon, editorOnly: true },
     { name: "Users & Roles", href: "/admin/users", icon: UserCog, adminOnly: true },

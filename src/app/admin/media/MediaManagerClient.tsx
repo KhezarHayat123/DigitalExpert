@@ -3,12 +3,16 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { MediaFile } from "@/lib/types";
-import { Upload, Copy, Check, Trash2, ExternalLink, Plus } from "lucide-react";
+import { compressImage } from "@/lib/imageCompression";
+import { Upload, Copy, Check, Trash2, Link as LinkIcon, Plus } from "lucide-react";
 
 export default function MediaManagerClient({ initialMedia }: { initialMedia: MediaFile[] }) {
   const [media, setMedia] = useState<MediaFile[]>(initialMedia);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [showUrlDialog, setShowUrlDialog] = useState(false);
+  const [customUrl, setCustomUrl] = useState("");
+  const [customName, setCustomName] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const copyUrl = (id: string, url: string) => {
@@ -19,47 +23,81 @@ export default function MediaManagerClient({ initialMedia }: { initialMedia: Med
     }
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setUploading(true);
-    const reader = new FileReader();
-    reader.onload = async () => {
-      try {
-        const base64Url = reader.result as string;
-        const newFile: MediaFile = {
-          id: `media-${Date.now()}`,
-          name: file.name,
-          url: base64Url,
-          size: file.size,
-          mimeType: file.type || "image/jpeg",
-          altText: file.name,
-          uploadedAt: new Date().toISOString(),
-          createdAt: new Date().toISOString(),
-        };
+    try {
+      // Compress camera/device photos on client to lightweight Web-optimized JPEG
+      const optimizedUrl = await compressImage(file, 1200, 0.82);
+      const newFile: MediaFile = {
+        id: `media-${Date.now()}`,
+        name: file.name,
+        url: optimizedUrl,
+        size: Math.round(optimizedUrl.length * 0.75),
+        mimeType: "image/jpeg",
+        altText: file.name,
+        uploadedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+      };
 
-        const res = await fetch("/api/admin/data", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            action: "save",
-            collection: "media",
-            item: newFile,
-          }),
-        });
+      const res = await fetch("/api/admin/data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "save",
+          collection: "media",
+          item: newFile,
+        }),
+      });
 
-        if (!res.ok) throw new Error("Failed to save image to media library");
-        setMedia([newFile, ...media]);
-        alert("Image uploaded successfully! You can now copy its URL and use it on any course or service.");
-      } catch (err: any) {
-        alert("Upload error: " + err.message);
-      } finally {
-        setUploading(false);
-        if (fileInputRef.current) fileInputRef.current.value = "";
-      }
-    };
-    reader.readAsDataURL(file);
+      if (!res.ok) throw new Error("Failed to save image to media library");
+      setMedia([newFile, ...media]);
+      alert("Picture uploaded successfully from your device! Click 'Copy URL' to use it in any course or service.");
+    } catch (err: any) {
+      alert("Upload error: " + err.message);
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const handleAddByUrl = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customUrl.trim()) return;
+
+    try {
+      const newFile: MediaFile = {
+        id: `media-${Date.now()}`,
+        name: customName.trim() || "Web Image",
+        url: customUrl.trim(),
+        size: 1024,
+        mimeType: "image/jpeg",
+        altText: customName.trim() || "Web Image",
+        uploadedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+      };
+
+      const res = await fetch("/api/admin/data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "save",
+          collection: "media",
+          item: newFile,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to save URL image");
+      setMedia([newFile, ...media]);
+      setCustomUrl("");
+      setCustomName("");
+      setShowUrlDialog(false);
+      alert("Image URL saved to library!");
+    } catch (err: any) {
+      alert("Error: " + err.message);
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -83,11 +121,11 @@ export default function MediaManagerClient({ initialMedia }: { initialMedia: Med
         <div>
           <h2 className="font-heading font-extrabold text-xl text-de-black">Media Library</h2>
           <p className="text-xs text-de-muted font-semibold mt-0.5">
-            Upload custom pictures from your computer/mobile for courses, services, and website banners.
+            Upload custom pictures directly from your PC/Mobile or save image links for courses and services.
           </p>
         </div>
 
-        <div>
+        <div className="flex items-center gap-2">
           <input
             ref={fileInputRef}
             type="file"
@@ -101,10 +139,61 @@ export default function MediaManagerClient({ initialMedia }: { initialMedia: Med
             className="px-4 py-2.5 rounded-btn bg-de-black text-white hover:bg-de-green text-xs font-heading font-extrabold transition-all border-2 border-de-black shadow-hard-sm flex items-center gap-2 cursor-pointer"
           >
             <Upload className="w-4 h-4" />
-            <span>{uploading ? "Uploading..." : "Upload Image from PC"}</span>
+            <span>{uploading ? "Compressing & Saving..." : "Upload from Device"}</span>
+          </button>
+
+          <button
+            onClick={() => setShowUrlDialog(true)}
+            className="px-3.5 py-2.5 rounded-btn bg-de-warm text-de-black hover:bg-white text-xs font-heading font-extrabold transition-all border-2 border-de-black shadow-hard-sm flex items-center gap-1.5"
+          >
+            <LinkIcon className="w-3.5 h-3.5" />
+            <span>Add URL</span>
           </button>
         </div>
       </div>
+
+      {showUrlDialog && (
+        <div className="p-4 bg-de-warm rounded-2xl border-2 border-de-black shadow-hard-sm">
+          <form onSubmit={handleAddByUrl} className="flex flex-col sm:flex-row gap-3 items-end">
+            <div className="flex-1 w-full">
+              <label className="block text-[11px] font-bold uppercase text-de-muted mb-1">Image Name / Label</label>
+              <input
+                type="text"
+                placeholder="e.g. Dubai Client Meeting or Course Banner"
+                value={customName}
+                onChange={(e) => setCustomName(e.target.value)}
+                className="w-full p-2.5 rounded-btn border border-de-border bg-white text-xs font-semibold focus:border-de-black"
+              />
+            </div>
+            <div className="flex-1 w-full">
+              <label className="block text-[11px] font-bold uppercase text-de-muted mb-1">Image URL (https://... or /brand/...)</label>
+              <input
+                type="text"
+                required
+                placeholder="https://images.unsplash.com/... or any online image"
+                value={customUrl}
+                onChange={(e) => setCustomUrl(e.target.value)}
+                className="w-full p-2.5 rounded-btn border border-de-border bg-white text-xs font-semibold focus:border-de-black"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="submit"
+                className="px-4 py-2.5 rounded-btn bg-de-green text-white font-bold text-xs border border-de-black"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowUrlDialog(false)}
+                className="px-3 py-2.5 rounded-btn bg-white border border-de-border font-bold text-xs"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         {media.map((file) => (
@@ -114,7 +203,7 @@ export default function MediaManagerClient({ initialMedia }: { initialMedia: Med
                 src={file.url}
                 alt={file.altText || file.name}
                 fill
-                unoptimized={file.url.startsWith("data:")}
+                unoptimized
                 className="object-contain p-2"
               />
             </div>
@@ -133,7 +222,7 @@ export default function MediaManagerClient({ initialMedia }: { initialMedia: Med
                   className="px-2.5 py-1 rounded bg-de-warm hover:bg-white text-[11px] font-bold border border-de-border flex items-center gap-1 transition-colors flex-1 justify-center"
                 >
                   {copiedId === file.id ? <Check className="w-3 h-3 text-de-green" /> : <Copy className="w-3 h-3" />}
-                  <span>{copiedId === file.id ? "Copied" : "Copy URL"}</span>
+                  <span>{copiedId === file.id ? "Copied!" : "Copy URL"}</span>
                 </button>
                 <button
                   onClick={() => handleDelete(file.id)}

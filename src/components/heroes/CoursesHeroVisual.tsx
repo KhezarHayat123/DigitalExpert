@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Check, Sparkles } from "lucide-react";
 
 const COURSES_PREVIEW = [
-  { name: "AI Web & App Dev", fee: "Contact for Fee", tag: "3 Months" },
+  { name: "AI Web & App Dev", fee: "20,000 PKR", tag: "3 Months" },
   { name: "WordPress Course", fee: "20,000 PKR", tag: "2 Months" },
   { name: "Social Media Marketing", fee: "10,000 PKR", tag: "1.5 Months" },
   { name: "Google & TikTok Ads", fee: "15,000 PKR", tag: "2 Months" },

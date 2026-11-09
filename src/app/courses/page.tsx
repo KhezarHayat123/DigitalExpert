@@ -39,7 +39,7 @@ export default function CoursesPage() {
 
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <MagneticButton href="#courses-catalog" variant="black">
-                  Explore All 6 Courses
+                  Explore All Practical Courses
                 </MagneticButton>
                 <MagneticButton href="/enroll" variant="amber">
                   Apply for Admission

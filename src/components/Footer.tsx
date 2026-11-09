@@ -104,6 +104,12 @@ export default function Footer() {
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0 text-de-green" />
                 </Link>
               </li>
+              <li>
+                <Link href="/feedback" className="hover:text-de-green transition-colors flex items-center justify-between group">
+                  <span>Client & Student Feedback</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0 text-de-green" />
+                </Link>
+              </li>
             </ul>
           </div>
 

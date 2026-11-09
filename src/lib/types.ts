@@ -80,6 +80,9 @@ export interface Testimonial {
   photo?: string;
   rating: number;
   isSample: boolean;
+  type?: "client" | "student";
+  courseOrService?: string;
+  date?: string;
 }
 
 export interface TeamMember {

@@ -84,7 +84,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Our Core Expertise"
-            title="Six Specialized Services Built for"
+            title="Specialized Agency & AI Services Built for"
             highlight="High Conversion"
             description="Explore our specialized digital capabilities. Select any service to view transparent packages, deliverable scopes, and process timelines."
           />

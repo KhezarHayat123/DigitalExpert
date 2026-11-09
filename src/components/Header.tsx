@@ -11,9 +11,10 @@ const NAV_ITEMS = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
   { name: "Courses", href: "/courses" },
+  { name: "Feedback", href: "/feedback" },
+  { name: "Completed Projects", href: "/projects" },
   { name: "About Us", href: "/about" },
   { name: "Contact Us", href: "/contact" },
-  { name: "Completed Projects", href: "/projects" },
 ];
 
 export default function Header() {
