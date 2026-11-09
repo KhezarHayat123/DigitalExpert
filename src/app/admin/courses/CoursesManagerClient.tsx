@@ -308,7 +308,9 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
                       if (!file) return;
                       const reader = new FileReader();
                       reader.onload = () => {
-                        setEditingCourse({ ...editingCourse, image: reader.result as string });
+                        if (reader.result) {
+                          setEditingCourse((prev) => (prev ? { ...prev, image: reader.result as string } : null));
+                        }
                       };
                       reader.readAsDataURL(file);
                     }}

@@ -35,7 +35,7 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
 
   const allCourses = getCourses(true);
   const relatedCourses = allCourses.filter((c) => c.slug !== course.slug).slice(0, 3);
-  const totalLectures = course.modules.reduce((acc, m) => acc + m.lectures.length, 0);
+  const totalLectures = (course.modules || []).reduce((acc, m) => acc + (m.lectures || []).length, 0);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -252,16 +252,27 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
                   )}
                 </div>
 
-                {/* PROMINENT ENROLL NOW BUTTON (WhatsApp removed as requested) */}
+                {/* PROMINENT ENROLL NOW BUTTON */}
                 <div className="pt-2">
-                  <Link
-                    href={course.fee > 0 ? `/enroll?course=${course.slug}` : `https://wa.me/923124051296?text=Hello%20DigitalExpert,%20I%20want%20to%20inquire%20about%20the%20${encodeURIComponent(course.title)}%20course.`}
-                    target={course.fee > 0 ? "_self" : "_blank"}
-                    className="w-full py-4 px-6 rounded-btn font-heading font-extrabold text-base bg-de-amber text-de-black hover:bg-de-black hover:text-de-amber transition-all duration-200 border-2 border-de-black shadow-hard hover:shadow-hard-lg flex items-center justify-center gap-3 group text-center"
-                  >
-                    <span>{course.fee > 0 ? "Enroll Now & Secure Seat" : "Inquire Fee & Enroll on WhatsApp"}</span>
-                    <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" />
-                  </Link>
+                  {course.fee > 0 ? (
+                    <Link
+                      href={`/enroll?course=${course.slug}`}
+                      className="w-full py-4 px-6 rounded-btn font-heading font-extrabold text-base bg-de-amber text-de-black hover:bg-de-black hover:text-de-amber transition-all duration-200 border-2 border-de-black shadow-hard hover:shadow-hard-lg flex items-center justify-center gap-3 group text-center"
+                    >
+                      <span>Enroll Now & Secure Seat</span>
+                      <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" />
+                    </Link>
+                  ) : (
+                    <a
+                      href={`https://wa.me/923124051296?text=Hello%20DigitalExpert,%20I%20want%20to%20inquire%20about%20the%20${encodeURIComponent(course.title)}%20course.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-4 px-6 rounded-btn font-heading font-extrabold text-base bg-de-amber text-de-black hover:bg-de-black hover:text-de-amber transition-all duration-200 border-2 border-de-black shadow-hard hover:shadow-hard-lg flex items-center justify-center gap-3 group text-center"
+                    >
+                      <span>Inquire Fee & Enroll on WhatsApp</span>
+                      <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" />
+                    </a>
+                  )}
                   <p className="text-center text-[11px] font-bold text-de-muted mt-2">
                     ⚡ Physical campus seats strictly limited to 20 students per batch.
                   </p>

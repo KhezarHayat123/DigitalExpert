@@ -34,6 +34,8 @@ export default function MediaManagerClient({ initialMedia }: { initialMedia: Med
           url: base64Url,
           size: file.size,
           mimeType: file.type || "image/jpeg",
+          altText: file.name,
+          uploadedAt: new Date().toISOString(),
           createdAt: new Date().toISOString(),
         };
 

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Check, Sparkles } from "lucide-react";
 
 const COURSES_PREVIEW = [
+  { name: "AI Web & App Dev", fee: "Contact for Fee", tag: "3 Months" },
   { name: "WordPress Course", fee: "20,000 PKR", tag: "2 Months" },
   { name: "Social Media Marketing", fee: "10,000 PKR", tag: "1.5 Months" },
   { name: "Google & TikTok Ads", fee: "15,000 PKR", tag: "2 Months" },
@@ -38,7 +39,7 @@ export default function CoursesHeroVisual() {
             <span className="font-heading font-extrabold text-sm text-de-black">Practical IT Curriculum</span>
           </div>
           <span className="text-[11px] font-bold text-de-green bg-de-green/10 px-2.5 py-1 rounded-full uppercase">
-            6 Official Courses
+            All Practical Tracks
           </span>
         </div>
 

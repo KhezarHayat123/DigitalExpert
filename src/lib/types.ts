@@ -156,8 +156,9 @@ export interface MediaFile {
   url: string;
   size: number;
   mimeType: string;
-  altText: string;
-  uploadedAt: string;
+  altText?: string;
+  uploadedAt?: string;
+  createdAt?: string;
 }
 
 export type UserRole = "admin" | "editor" | "manager";

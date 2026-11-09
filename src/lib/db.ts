@@ -44,6 +44,7 @@ export function getDatabase(): DatabaseSchema {
     memoryDb.students = memoryDb.students || [];
     memoryDb.lectures = memoryDb.lectures || [];
     memoryDb.studentAssignments = memoryDb.studentAssignments || [];
+    memoryDb.media = memoryDb.media || [];
     return memoryDb;
   }
 
@@ -56,6 +57,7 @@ export function getDatabase(): DatabaseSchema {
     memoryDb!.students = memoryDb!.students || [];
     memoryDb!.lectures = memoryDb!.lectures || [];
     memoryDb!.studentAssignments = memoryDb!.studentAssignments || [];
+    memoryDb!.media = memoryDb!.media || [];
     return memoryDb!;
   }
 
@@ -65,6 +67,7 @@ export function getDatabase(): DatabaseSchema {
     memoryDb!.students = memoryDb!.students || [];
     memoryDb!.lectures = memoryDb!.lectures || [];
     memoryDb!.studentAssignments = memoryDb!.studentAssignments || [];
+    memoryDb!.media = memoryDb!.media || [];
     return memoryDb!;
   } catch (error) {
     console.error("Error reading database, falling back to seed:", error);
@@ -72,6 +75,7 @@ export function getDatabase(): DatabaseSchema {
     memoryDb!.students = memoryDb!.students || [];
     memoryDb!.lectures = memoryDb!.lectures || [];
     memoryDb!.studentAssignments = memoryDb!.studentAssignments || [];
+    memoryDb!.media = memoryDb!.media || [];
     return memoryDb!;
   }
 }

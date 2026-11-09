@@ -166,7 +166,9 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
                       if (!file) return;
                       const reader = new FileReader();
                       reader.onload = () => {
-                        setSelectedService({ ...selectedService, image: reader.result as string });
+                        if (reader.result) {
+                          setSelectedService((prev) => (prev ? { ...prev, image: reader.result as string } : null));
+                        }
                       };
                       reader.readAsDataURL(file);
                     }}
