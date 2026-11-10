@@ -96,7 +96,7 @@ export default function FeedbackPage() {
             <MagneticButton href="/contact" variant="amber">
               Consult on Project
             </MagneticButton>
-            <MagneticButton href="/courses" variant="green">
+            <MagneticButton href="/courses" variant="black">
               Explore Courses
             </MagneticButton>
           </div>

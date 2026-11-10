@@ -116,7 +116,7 @@ export default function FeedbackClientList({ initialTestimonials }: { initialTes
                     <p className="font-heading font-extrabold text-sm text-de-black truncate">
                       {item.name}
                     </p>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-de-green shrink-0" title="Verified Feedback" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-de-green shrink-0" />
                   </div>
                   <p className="text-xs text-de-muted font-semibold truncate">
                     {item.role}

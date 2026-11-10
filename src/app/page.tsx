@@ -24,6 +24,12 @@ import {
   ChevronRight,
   HelpCircle,
   MessageCircle,
+  Globe,
+  ShoppingCart,
+  Code2,
+  Smartphone,
+  Cpu,
+  Rocket,
 } from "lucide-react";
 
 export const revalidate = 60; // On-demand ISR
@@ -35,11 +41,17 @@ const SERVICE_ICONS: Record<string, any> = {
   "google-tiktok-ads": Target,
   "video-ads": Video,
   "youtube-automation": Youtube,
+  "business-website": Globe,
+  "ecommerce-website": ShoppingCart,
+  "web-app-development": Code2,
+  "mobile-app-development": Smartphone,
+  "custom-software-development": Cpu,
+  "app-deployment": Rocket,
 };
 
 export default async function HomePage() {
-  const courses = getCourses(true);
-  const services = getServices(true);
+  const courses = getCourses(true).slice(0, 3);
+  const services = getServices(true).slice(0, 3);
   const projects = getProjects().slice(0, 4);
   const testimonials = getTestimonials();
   const faqs = getFaqs().slice(0, 5);
@@ -213,7 +225,7 @@ export default async function HomePage() {
 
           <div className="mt-12 text-center">
             <MagneticButton href="/services" variant="amber">
-              View All 6 Services
+              Explore All Services
             </MagneticButton>
           </div>
         </div>
