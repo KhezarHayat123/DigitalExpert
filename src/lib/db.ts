@@ -1,4 +1,5 @@
 import fs from "fs";
+import os from "os";
 import path from "path";
 import {
   DatabaseSchema,
@@ -24,6 +25,7 @@ import { initialSeedData } from "./seedData";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const DB_FILE = path.join(DATA_DIR, "db.json");
+const TMP_DB_FILE = path.join(os.tmpdir(), "digitalexpert-db.json");
 const PRIVATE_UPLOADS_DIR = path.join(DATA_DIR, "private-uploads");
 
 // Ensure data directories exist
@@ -40,59 +42,132 @@ function ensureDirs() {
   }
 }
 
+export function isDiskWritable(): boolean {
+  try {
+    fs.accessSync(DATA_DIR, fs.constants.W_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function normalizeSchema(db: DatabaseSchema): DatabaseSchema {
+  db.students = db.students || [];
+  db.lectures = db.lectures || [];
+  db.studentAssignments = db.studentAssignments || [];
+  db.media = db.media || [];
+  return db;
+}
+
 // In-memory cache for fast reads
 let memoryDb: DatabaseSchema | null = null;
 
 export function getDatabase(): DatabaseSchema {
   if (memoryDb) {
-    memoryDb.students = memoryDb.students || [];
-    memoryDb.lectures = memoryDb.lectures || [];
-    memoryDb.studentAssignments = memoryDb.studentAssignments || [];
-    memoryDb.media = memoryDb.media || [];
-    return memoryDb;
+    return normalizeSchema(memoryDb);
   }
 
   ensureDirs();
 
+  // In read-only cloud deployments (like Vercel), check if a newer /tmp state exists
+  try {
+    const tmpExists = fs.existsSync(TMP_DB_FILE);
+    const dbExists = fs.existsSync(DB_FILE);
+    if (tmpExists && (!dbExists || fs.statSync(TMP_DB_FILE).mtimeMs > fs.statSync(DB_FILE).mtimeMs)) {
+      const tmpRaw = fs.readFileSync(TMP_DB_FILE, "utf-8");
+      memoryDb = normalizeSchema(JSON.parse(tmpRaw));
+      return memoryDb;
+    }
+  } catch {
+    // Ignore /tmp read failures and fall through to DB_FILE
+  }
+
   if (!fs.existsSync(DB_FILE)) {
-    // Initialize with seed data
-    fs.writeFileSync(DB_FILE, JSON.stringify(initialSeedData, null, 2), "utf-8");
-    memoryDb = JSON.parse(JSON.stringify(initialSeedData));
-    memoryDb!.students = memoryDb!.students || [];
-    memoryDb!.lectures = memoryDb!.lectures || [];
-    memoryDb!.studentAssignments = memoryDb!.studentAssignments || [];
-    memoryDb!.media = memoryDb!.media || [];
-    return memoryDb!;
+    try {
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialSeedData, null, 2), "utf-8");
+    } catch {
+      // Read-only runtime; use memory/seed directly
+    }
+    memoryDb = normalizeSchema(JSON.parse(JSON.stringify(initialSeedData)));
+    return memoryDb;
   }
 
   try {
     const raw = fs.readFileSync(DB_FILE, "utf-8");
-    memoryDb = JSON.parse(raw);
-    memoryDb!.students = memoryDb!.students || [];
-    memoryDb!.lectures = memoryDb!.lectures || [];
-    memoryDb!.studentAssignments = memoryDb!.studentAssignments || [];
-    memoryDb!.media = memoryDb!.media || [];
-    return memoryDb!;
+    memoryDb = normalizeSchema(JSON.parse(raw));
+    return memoryDb;
   } catch (error) {
     console.error("Error reading database, falling back to seed:", error);
-    memoryDb = JSON.parse(JSON.stringify(initialSeedData));
-    memoryDb!.students = memoryDb!.students || [];
-    memoryDb!.lectures = memoryDb!.lectures || [];
-    memoryDb!.studentAssignments = memoryDb!.studentAssignments || [];
-    memoryDb!.media = memoryDb!.media || [];
-    return memoryDb!;
+    memoryDb = normalizeSchema(JSON.parse(JSON.stringify(initialSeedData)));
+    return memoryDb;
   }
 }
 
 export function saveDatabase(data: DatabaseSchema): void {
   ensureDirs();
-  memoryDb = data;
+  const normalized = normalizeSchema(data);
+  memoryDb = normalized;
+  const serialized = JSON.stringify(normalized, null, 2);
+
   try {
     const tempFile = `${DB_FILE}.tmp.${Date.now()}`;
-    fs.writeFileSync(tempFile, JSON.stringify(data, null, 2), "utf-8");
+    fs.writeFileSync(tempFile, serialized, "utf-8");
     fs.renameSync(tempFile, DB_FILE);
+    return;
+  } catch {
+    // Expected on read-only serverless runtimes like Vercel; fall back to /tmp
+  }
+
+  try {
+    const tmpFallback = `${TMP_DB_FILE}.tmp.${Date.now()}`;
+    fs.writeFileSync(tmpFallback, serialized, "utf-8");
+    fs.renameSync(tmpFallback, TMP_DB_FILE);
   } catch (err) {
-    console.warn("Could not write database to disk (likely read-only runtime environment):", err);
+    console.warn("Could not write database to disk or /tmp:", err);
+  }
+}
+
+/**
+ * Optional persistent remote backup to GitHub Contents API if GITHUB_TOKEN is configured
+ * in Vercel Environment Variables (e.g., GITHUB_TOKEN + optional GITHUB_REPO="owner/repo").
+ */
+export async function persistDatabaseRemotely(commitMessage = "CMS update via Admin Panel"): Promise<boolean> {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) return false;
+
+  const repo = process.env.GITHUB_REPO || "KhezarHayat123/DigitalExpert";
+  const branch = process.env.GITHUB_BRANCH || "main";
+  const apiUrl = `https://api.github.com/repos/${repo}/contents/data/db.json`;
+
+  try {
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    };
+
+    const getRes = await fetch(`${apiUrl}?ref=${branch}`, { headers, cache: "no-store" });
+    if (!getRes.ok) return false;
+    const currentFile = await getRes.json();
+
+    const db = getDatabase();
+    const contentBase64 = Buffer.from(JSON.stringify(db, null, 2) + "\n", "utf-8").toString("base64");
+
+    const putRes = await fetch(apiUrl, {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({
+        message: commitMessage,
+        content: contentBase64,
+        sha: currentFile.sha,
+        branch,
+      }),
+    });
+    return putRes.ok;
+  } catch (err) {
+    console.warn("Optional GitHub DB persistence failed:", err);
+    return false;
   }
 }
 

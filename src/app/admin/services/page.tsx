@@ -3,6 +3,8 @@ import { getCurrentAdmin } from "@/lib/auth";
 import { getServices } from "@/lib/db";
 import ServicesManagerClient from "./ServicesManagerClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Services & Pricing | DigitalExpert Admin",
 };

@@ -26,6 +26,8 @@ import {
   Rocket,
 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   const services = getServices(true);
   return services.map((s) => ({ slug: s.slug }));

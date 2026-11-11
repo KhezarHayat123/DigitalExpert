@@ -52,9 +52,19 @@ export default function MediaManagerClient({ initialMedia }: { initialMedia: Med
         }),
       });
 
-      if (!res.ok) throw new Error("Failed to save image to media library");
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.error || "Failed to save image to media library");
+      }
+      const data = await res.json().catch(() => ({}));
       setMedia([newFile, ...media]);
-      alert("Picture uploaded successfully from your device! Click 'Copy URL' to use it in any course or service.");
+      if (data?.persisted === "temporary") {
+        alert(
+          "Picture uploaded to active session! You can pick it now via 'Pick from Media Library' in Courses, Services, or Feedback. Note: On free serverless hosting without GITHUB_TOKEN configured, edits reset after container restart."
+        );
+      } else {
+        alert("Picture uploaded successfully! Click 'Pick from Media Library' inside any Course, Service, or Feedback card, or 'Copy URL'.");
+      }
     } catch (err: any) {
       alert("Upload error: " + err.message);
     } finally {

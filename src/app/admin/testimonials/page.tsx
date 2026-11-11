@@ -3,6 +3,8 @@ import { getCurrentAdmin } from "@/lib/auth";
 import { getTestimonials } from "@/lib/db";
 import TestimonialsManagerClient from "./TestimonialsManagerClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Testimonials Manager | DigitalExpert Admin",
 };

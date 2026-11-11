@@ -3,6 +3,8 @@ import { getCurrentAdmin } from "@/lib/auth";
 import { getCourses } from "@/lib/db";
 import CoursesManagerClient from "./CoursesManagerClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Courses Manager | DigitalExpert Admin",
 };

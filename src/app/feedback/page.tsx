@@ -5,6 +5,8 @@ import MagneticButton from "@/components/MagneticButton";
 import FeedbackClientList from "./FeedbackClientList";
 import { MessageCircle, Star, Sparkles, CheckCircle2 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Client Reviews & Student Feedback | DigitalExpert",
   description: "Read genuine feedback and reviews from our global business clients across UAE, UK, and Saudi Arabia, as well as students from our physical campus in Bahawalpur.",

@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getCurrentAdmin } from "@/lib/auth";
 import {
   getDatabase,
+  isDiskWritable,
+  persistDatabaseRemotely,
   saveCourse,
   deleteCourse,
   saveService,
@@ -32,6 +35,17 @@ export async function GET() {
   return NextResponse.json({ success: true, data: db });
 }
 
+function revalidateSiteRoutes() {
+  revalidatePath("/", "layout");
+  revalidatePath("/services");
+  revalidatePath("/courses");
+  revalidatePath("/feedback");
+  revalidatePath("/admin/media");
+  revalidatePath("/admin/courses");
+  revalidatePath("/admin/services");
+  revalidatePath("/admin/testimonials");
+}
+
 export async function POST(req: Request) {
   const admin = await getCurrentAdmin();
   if (!admin) {
@@ -59,7 +73,13 @@ export async function POST(req: Request) {
       else if (collection === "media") addMediaFile(item, admin.email);
       else return NextResponse.json({ error: "Invalid collection" }, { status: 400 });
 
-      return NextResponse.json({ success: true });
+      revalidateSiteRoutes();
+      const diskOk = isDiskWritable();
+      const githubOk = diskOk ? false : await persistDatabaseRemotely(`Admin save ${collection}`);
+      return NextResponse.json({
+        success: true,
+        persisted: diskOk ? "disk" : githubOk ? "github" : "temporary",
+      });
     }
 
     if (action === "delete") {
@@ -73,7 +93,13 @@ export async function POST(req: Request) {
       else if (collection === "media") deleteMediaFile(id, admin.email);
       else return NextResponse.json({ error: "Invalid collection" }, { status: 400 });
 
-      return NextResponse.json({ success: true });
+      revalidateSiteRoutes();
+      const diskOk = isDiskWritable();
+      const githubOk = diskOk ? false : await persistDatabaseRemotely(`Admin delete ${collection}`);
+      return NextResponse.json({
+        success: true,
+        persisted: diskOk ? "disk" : githubOk ? "github" : "temporary",
+      });
     }
 
     return NextResponse.json({ error: "Invalid action" }, { status: 400 });

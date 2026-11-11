@@ -1391,7 +1391,7 @@
         {
           "id": "pkg-biz-1",
           "name": "Starter AI Business Site",
-          "price": 95000,
+          "price": 25000,
           "description": "Clean, lightning-fast 5-page corporate website engineered with AI for high conversion.",
           "features": [
             "Up to 5 Custom Responsive Pages",
@@ -1405,7 +1405,7 @@
         {
           "id": "pkg-biz-2",
           "name": "Corporate Brand Authority",
-          "price": 150000,
+          "price": 45000,
           "description": "Comprehensive business platform with interactive animations, bilingual support & CMS.",
           "features": [
             "Up to 10 Custom Designed Pages",
@@ -1420,7 +1420,7 @@
         {
           "id": "pkg-biz-3",
           "name": "Enterprise Global Portal",
-          "price": 220000,
+          "price": 70000,
           "description": "Premium enterprise portal with bilingual Arabic/English layout, custom components & CRM sync.",
           "features": [
             "Unlimited Pages & Custom Component Library",
@@ -1502,7 +1502,7 @@
         {
           "id": "pkg-ecom-1",
           "name": "Essential Online Store",
-          "price": 195000,
+          "price": 45000,
           "description": "Modern storefront with up to 50 products, payment gateway, and mobile-optimized cart.",
           "features": [
             "Up to 50 Products Uploaded & Configured",
@@ -1516,7 +1516,7 @@
         {
           "id": "pkg-ecom-2",
           "name": "Brand E-Commerce Scale",
-          "price": 290000,
+          "price": 75000,
           "description": "High-performance e-commerce platform with automated invoicing, discounts, and multi-currency support.",
           "features": [
             "Up to 300 Products with Variant Management",
@@ -1531,7 +1531,7 @@
         {
           "id": "pkg-ecom-3",
           "name": "Enterprise Multi-Currency Marketplace",
-          "price": 390000,
+          "price": 120000,
           "description": "High-volume international e-commerce engine with ERP inventory sync and custom checkout workflows.",
           "features": [
             "Unlimited Product Catalog Support",
@@ -1614,7 +1614,7 @@
         {
           "id": "pkg-webapp-1",
           "name": "Custom Web Portal / MVP",
-          "price": 275000,
+          "price": 60000,
           "description": "Fast MVP web application with authentication, role permissions, and database CRUD.",
           "features": [
             "Secure User Authentication (Email & Social Logins)",
@@ -1627,7 +1627,7 @@
         {
           "id": "pkg-webapp-2",
           "name": "Full SaaS & Dashboard System",
-          "price": 420000,
+          "price": 110000,
           "description": "Multi-tenant SaaS application with subscription billing, reporting, and real-time alerts.",
           "features": [
             "Subscription Billing Integration (Stripe Billing)",
@@ -1641,7 +1641,7 @@
         {
           "id": "pkg-webapp-3",
           "name": "Enterprise Custom Cloud Platform",
-          "price": 580000,
+          "price": 180000,
           "description": "Large-scale web software architecture with microservices, audit logging, and high concurrency.",
           "features": [
             "Enterprise Security & Data Encryption at Rest",
@@ -1723,7 +1723,7 @@
         {
           "id": "pkg-mobapp-1",
           "name": "Starter Cross-Platform App",
-          "price": 390000,
+          "price": 100000,
           "description": "Cross-platform mobile application for Android & iOS with clean UI and API integration.",
           "features": [
             "Cross-Platform Codebase (Flutter or React Native)",
@@ -1736,7 +1736,7 @@
         {
           "id": "pkg-mobapp-2",
           "name": "Full Business Mobile Solution",
-          "price": 580000,
+          "price": 180000,
           "description": "Complete mobile product with payment checkout, offline caching, and real-time updates.",
           "features": [
             "Up to 18 Dynamic Interactive Screens",
@@ -1750,7 +1750,7 @@
         {
           "id": "pkg-mobapp-3",
           "name": "Advanced Real-Time Cloud Mobile App",
-          "price": 850000,
+          "price": 280000,
           "description": "High-end mobile application with GPS location, live streaming/audio, or AI integrations.",
           "features": [
             "Unlimited Screens & Custom Gesture Controls",
@@ -1831,7 +1831,7 @@
         {
           "id": "pkg-soft-1",
           "name": "Tailored Management Software",
-          "price": 310000,
+          "price": 75000,
           "description": "Specialized desktop/web software to replace manual spreadsheets and paper records.",
           "features": [
             "Custom Data Entry & Record Bookkeeping",
@@ -1844,7 +1844,7 @@
         {
           "id": "pkg-soft-2",
           "name": "Complete Business ERP & POS",
-          "price": 480000,
+          "price": 135000,
           "description": "Full-featured enterprise software for retail, trading, clinic, or distribution firms.",
           "features": [
             "Multi-Branch Inventory & Stock Transfer Control",
@@ -1858,7 +1858,7 @@
         {
           "id": "pkg-soft-3",
           "name": "Enterprise Automation Architecture",
-          "price": 720000,
+          "price": 220000,
           "description": "End-to-end bespoke enterprise software with hardware integration and automated workflows.",
           "features": [
             "Custom Accounting Standards & Financial Ledgers",
@@ -1938,7 +1938,7 @@
         {
           "id": "pkg-deploy-1",
           "name": "Google Play Store Publishing",
-          "price": 40000,
+          "price": 15000,
           "description": "App testing, build preparation, Google Play Store listing, submission, and publishing assistance.",
           "features": [
             "Release .AAB Build Inspection & Signature Verification",
@@ -1947,13 +1947,13 @@
             "Compliant Privacy Policy Generation & Hosting",
             "Data Safety Section Completion",
             "Submission & Review Tracking Support",
-            "Note: Rs. 40,000 is our technical service fee only. App build must be provided by client. Google $25 one-time developer registration fee is separate."
+            "Note: Rs. 15,000 is our technical service fee only. App build must be provided by client. Google $25 one-time developer registration fee is separate."
           ]
         },
         {
           "id": "pkg-deploy-2",
           "name": "Dual Store (Play Store + App Store Connect)",
-          "price": 75000,
+          "price": 28000,
           "description": "Complete submission and publishing support for both Google Play and Apple App Store.",
           "features": [
             "Full Google Play Store Setup & Publishing Assistance",
@@ -1968,7 +1968,7 @@
         {
           "id": "pkg-deploy-3",
           "name": "Store Optimization & Policy Approval Assistance",
-          "price": 95000,
+          "price": 40000,
           "description": "Complete dual store release plus App Store Optimization (ASO) and priority review assistance.",
           "features": [
             "Full Dual App Store Publishing (Android & iOS)",
@@ -1986,7 +1986,7 @@
         },
         {
           "question": "Store developer accounts ki fees kismein aati hai?",
-          "answer": "Google Play Console ($25 one-time) aur Apple Developer ($99/year) ki fees client apne credit/debit card se ada karta hai. Rs. 40,000 hamari technical publishing aur compliance service fee hai."
+          "answer": "Google Play Console ($25 one-time) aur Apple Developer ($99/year) ki fees client apne credit/debit card se ada karta hai. Rs. 15,000 hamari technical publishing aur compliance service fee hai."
         },
         {
           "question": "Agar Google ya Apple app reject kar de to kya hoga?",
@@ -2131,7 +2131,8 @@
       "photo": "/brand/digital-academy.jpg",
       "rating": 5,
       "isSample": true,
-      "type": "client"
+      "type": "client",
+      "screenshot": "/brand/feedback-whatsapp-client.jpg"
     },
     {
       "id": "test-2",
@@ -2142,7 +2143,8 @@
       "photo": "/brand/digital-website.jpg",
       "rating": 5,
       "isSample": true,
-      "type": "client"
+      "type": "client",
+      "screenshot": "/brand/feedback-chat-review.jpg"
     },
     {
       "id": "test-3",
@@ -2153,7 +2155,8 @@
       "photo": "/brand/digital-marketing-workspace.png",
       "rating": 5,
       "isSample": true,
-      "type": "client"
+      "type": "client",
+      "screenshot": "/brand/feedback-whatsapp-client.jpg"
     },
     {
       "id": "test-4",
@@ -2164,7 +2167,8 @@
       "rating": 5,
       "isSample": false,
       "type": "student",
-      "photo": "/brand/khezar-hayat.png"
+      "photo": "/brand/khezar-hayat.png",
+      "screenshot": "/brand/feedback-whatsapp-student.jpg"
     },
     {
       "id": "test-5",
@@ -2174,7 +2178,8 @@
       "text": "The physical workstation lab at University Chowk is amazing. Zero theory, 100% live projects. I learned how to rank websites on Google Page 1 and build custom WooCommerce stores. Highly recommended!",
       "rating": 5,
       "isSample": false,
-      "type": "student"
+      "type": "student",
+      "screenshot": "/brand/feedback-whatsapp-student.jpg"
     },
     {
       "id": "test-6",
@@ -2184,7 +2189,8 @@
       "text": "The 1-on-1 mentorship by Sir Umar Farooq and Sir Khezar helped me understand real paid advertising for UAE and local brands. Best practical IT institute in Southern Punjab.",
       "rating": 5,
       "isSample": false,
-      "type": "student"
+      "type": "student",
+      "screenshot": "/brand/feedback-chat-review.jpg"
     }
   ],
   "team": [
@@ -2344,6 +2350,78 @@
       "mimeType": "image/png",
       "altText": "Umar Farooq - Manager of DigitalExpert",
       "uploadedAt": "2026-10-16T12:00:00.000Z"
+    },
+    {
+      "id": "med-feedback-1",
+      "name": "feedback-whatsapp-client.jpg",
+      "url": "/brand/feedback-whatsapp-client.jpg",
+      "size": 545992,
+      "mimeType": "image/jpeg",
+      "altText": "Sample Client Feedback WhatsApp Screenshot",
+      "uploadedAt": "2026-11-11T09:50:00.000Z"
+    },
+    {
+      "id": "med-feedback-2",
+      "name": "feedback-whatsapp-student.jpg",
+      "url": "/brand/feedback-whatsapp-student.jpg",
+      "size": 514187,
+      "mimeType": "image/jpeg",
+      "altText": "Sample Student Feedback Chat Screenshot",
+      "uploadedAt": "2026-11-11T09:50:00.000Z"
+    },
+    {
+      "id": "med-feedback-3",
+      "name": "feedback-chat-review.jpg",
+      "url": "/brand/feedback-chat-review.jpg",
+      "size": 595649,
+      "mimeType": "image/jpeg",
+      "altText": "Sample E-Commerce Review Screenshot",
+      "uploadedAt": "2026-11-11T09:50:00.000Z"
+    },
+    {
+      "id": "med-web",
+      "name": "digital-website.jpg",
+      "url": "/brand/digital-website.jpg",
+      "size": 132391,
+      "mimeType": "image/jpeg",
+      "altText": "Web Development Banner",
+      "uploadedAt": "2026-11-11T09:50:00.000Z"
+    },
+    {
+      "id": "med-acad",
+      "name": "digital-academy.jpg",
+      "url": "/brand/digital-academy.jpg",
+      "size": 127614,
+      "mimeType": "image/jpeg",
+      "altText": "DigitalExpert IT Academy",
+      "uploadedAt": "2026-11-11T09:50:00.000Z"
+    },
+    {
+      "id": "med-ads",
+      "name": "digital-ads-seo.jpg",
+      "url": "/brand/digital-ads-seo.jpg",
+      "size": 123950,
+      "mimeType": "image/jpeg",
+      "altText": "Google Ads and SEO Banner",
+      "uploadedAt": "2026-11-11T09:50:00.000Z"
+    },
+    {
+      "id": "med-social",
+      "name": "digital-social-media.jpg",
+      "url": "/brand/digital-social-media.jpg",
+      "size": 153485,
+      "mimeType": "image/jpeg",
+      "altText": "Social Media Marketing Banner",
+      "uploadedAt": "2026-11-11T09:50:00.000Z"
+    },
+    {
+      "id": "med-workspace",
+      "name": "digital-marketing-workspace.png",
+      "url": "/brand/digital-marketing-workspace.png",
+      "size": 1864258,
+      "mimeType": "image/png",
+      "altText": "Digital Marketing Workspace",
+      "uploadedAt": "2026-11-11T09:50:00.000Z"
     }
   ],
   "users": [

@@ -6,6 +6,8 @@ import MagneticButton from "@/components/MagneticButton";
 import CoursesFilterList from "@/components/CoursesFilterList";
 import { Award, Laptop, Users, ShieldCheck } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Digital Marketing Courses in Bahawalpur | DigitalExpert",
   description: "Join practical digital marketing training at University Chowk, Bahawalpur. WordPress, SEO, Paid Ads, Video Ads, Social Media, and YouTube Automation.",

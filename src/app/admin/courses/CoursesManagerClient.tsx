@@ -4,13 +4,35 @@ import { useState } from "react";
 import Image from "next/image";
 import { Course } from "@/lib/types";
 import { compressImage } from "@/lib/imageCompression";
-import { Plus, Edit2, Trash2, Check, X, Clock, ExternalLink, Upload } from "lucide-react";
+import MediaPickerModal from "@/components/admin/MediaPickerModal";
+import { Plus, Edit2, Trash2, Check, X, Clock, ExternalLink, Upload, Image as ImageIcon } from "lucide-react";
 
 export default function CoursesManagerClient({ initialCourses }: { initialCourses: Course[] }) {
   const [courses, setCourses] = useState<Course[]>(initialCourses);
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [showMediaPicker, setShowMediaPicker] = useState(false);
+
+  const saveUploadToMediaLibrary = (url: string, fileName: string) => {
+    fetch("/api/admin/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "save",
+        collection: "media",
+        item: {
+          id: `med-${Date.now()}`,
+          name: fileName,
+          url,
+          size: Math.round((url.length * 3) / 4),
+          mimeType: "image/jpeg",
+          altText: fileName,
+          uploadedAt: new Date().toISOString(),
+        },
+      }),
+    }).catch(() => {});
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -297,8 +319,8 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
                   )}
                 </div>
 
-                {/* Direct PC Image Upload */}
-                <div className="mt-2.5 flex items-center gap-2">
+                {/* Direct PC Image Upload + Media Library Picker */}
+                <div className="mt-2.5 flex flex-wrap items-center gap-2">
                   <input
                     type="file"
                     id="admin-course-file-upload"
@@ -310,6 +332,7 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
                       try {
                         const optimizedUrl = await compressImage(file, 1200, 0.82);
                         setEditingCourse((prev) => (prev ? { ...prev, image: optimizedUrl } : null));
+                        saveUploadToMediaLibrary(optimizedUrl, file.name);
                       } catch (err: any) {
                         alert("Image processing error: " + err.message);
                       }
@@ -322,7 +345,14 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
                     <Upload className="w-3.5 h-3.5" />
                     <span>Upload Image from Computer</span>
                   </label>
-                  <span className="text-[10px] text-de-muted font-bold">Pick any JPG, PNG or WebP</span>
+                  <button
+                    type="button"
+                    onClick={() => setShowMediaPicker(true)}
+                    className="px-3 py-1.5 rounded-btn bg-de-amber text-de-black hover:bg-amber-400 text-[11px] font-bold inline-flex items-center gap-1.5 transition-colors border border-de-black"
+                  >
+                    <ImageIcon className="w-3.5 h-3.5" />
+                    <span>Pick from Media Library</span>
+                  </button>
                 </div>
 
                 <div className="flex flex-wrap gap-1.5 mt-2">
@@ -385,6 +415,13 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
           </div>
         </div>
       )}
+
+      <MediaPickerModal
+        isOpen={showMediaPicker}
+        onClose={() => setShowMediaPicker(false)}
+        title="Select Course Card Image"
+        onSelect={(url) => setEditingCourse((prev) => (prev ? { ...prev, image: url } : null))}
+      />
     </div>
   );
 }

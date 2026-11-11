@@ -4,12 +4,34 @@ import { useState } from "react";
 import Image from "next/image";
 import { Service, ServicePackage } from "@/lib/types";
 import { compressImage } from "@/lib/imageCompression";
-import { Edit2, ExternalLink, CheckCircle2, Upload } from "lucide-react";
+import MediaPickerModal from "@/components/admin/MediaPickerModal";
+import { Edit2, ExternalLink, CheckCircle2, Upload, Image as ImageIcon } from "lucide-react";
 
 export default function ServicesManagerClient({ initialServices }: { initialServices: Service[] }) {
   const [services, setServices] = useState<Service[]>(initialServices);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [saving, setSaving] = useState(false);
+  const [showMediaPicker, setShowMediaPicker] = useState(false);
+
+  const saveUploadToMediaLibrary = (url: string, fileName: string) => {
+    fetch("/api/admin/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "save",
+        collection: "media",
+        item: {
+          id: `med-${Date.now()}`,
+          name: fileName,
+          url,
+          size: Math.round((url.length * 3) / 4),
+          mimeType: "image/jpeg",
+          altText: fileName,
+          uploadedAt: new Date().toISOString(),
+        },
+      }),
+    }).catch(() => {});
+  };
 
   const handlePackagePriceChange = (pkgId: string, newPrice: number) => {
     if (!selectedService) return;
@@ -155,8 +177,8 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
                   )}
                 </div>
 
-                {/* Direct PC Image Upload */}
-                <div className="mt-2.5 flex items-center gap-2">
+                {/* Direct PC Image Upload + Media Library Picker */}
+                <div className="mt-2.5 flex flex-wrap items-center gap-2">
                   <input
                     type="file"
                     id="admin-service-file-upload"
@@ -168,6 +190,7 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
                       try {
                         const optimizedUrl = await compressImage(file, 1200, 0.82);
                         setSelectedService((prev) => (prev ? { ...prev, image: optimizedUrl } : null));
+                        saveUploadToMediaLibrary(optimizedUrl, file.name);
                       } catch (err: any) {
                         alert("Image processing error: " + err.message);
                       }
@@ -180,7 +203,14 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
                     <Upload className="w-3.5 h-3.5" />
                     <span>Upload Image from Computer</span>
                   </label>
-                  <span className="text-[10px] text-de-muted font-bold">Pick any JPG, PNG or WebP</span>
+                  <button
+                    type="button"
+                    onClick={() => setShowMediaPicker(true)}
+                    className="px-3 py-1.5 rounded-btn bg-de-amber text-de-black hover:bg-amber-400 text-[11px] font-bold inline-flex items-center gap-1.5 transition-colors border border-de-black"
+                  >
+                    <ImageIcon className="w-3.5 h-3.5" />
+                    <span>Pick from Media Library</span>
+                  </button>
                 </div>
 
                 <div className="flex flex-wrap gap-1.5 mt-2">
@@ -256,6 +286,13 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
           </div>
         </div>
       )}
+
+      <MediaPickerModal
+        isOpen={showMediaPicker}
+        onClose={() => setShowMediaPicker(false)}
+        title="Select Service Card Image"
+        onSelect={(url) => setSelectedService((prev) => (prev ? { ...prev, image: url } : null))}
+      />
     </div>
   );
 }

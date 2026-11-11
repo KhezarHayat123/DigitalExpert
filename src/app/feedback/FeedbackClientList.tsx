@@ -4,10 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { Testimonial } from "@/lib/types";
 import Card3DTilt from "@/components/Card3DTilt";
-import { Star, CheckCircle2, MessageCircle, UserCheck, GraduationCap, Briefcase } from "lucide-react";
+import { Star, CheckCircle2, GraduationCap, Briefcase, ZoomIn, X } from "lucide-react";
 
 export default function FeedbackClientList({ initialTestimonials }: { initialTestimonials: Testimonial[] }) {
   const [filter, setFilter] = useState<"all" | "client" | "student">("all");
+  const [zoomedItem, setZoomedItem] = useState<Testimonial | null>(null);
 
   const filtered = initialTestimonials.filter((t) => {
     if (filter === "all") return true;
@@ -88,10 +89,40 @@ export default function FeedbackClientList({ initialTestimonials }: { initialTes
                   </div>
                 </div>
 
-                {/* Review Message */}
-                <p className="text-sm sm:text-base text-de-body font-semibold leading-relaxed italic">
-                  &ldquo;{item.text}&rdquo;
-                </p>
+                {/* Screenshot Showcase (primary) or Text Fallback */}
+                {item.screenshot ? (
+                  <div className="space-y-2.5">
+                    <button
+                      type="button"
+                      onClick={() => setZoomedItem(item)}
+                      className="group relative block w-full aspect-[4/3] rounded-xl border-2 border-de-black overflow-hidden bg-de-warm shadow-hard-sm focus:outline-none"
+                      aria-label={`View full feedback screenshot from ${item.name}`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={item.screenshot}
+                        alt={`${item.name} feedback screenshot`}
+                        className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors flex items-end justify-end p-2.5">
+                        <span className="px-2.5 py-1 rounded-full bg-white/95 border border-de-black text-[10px] font-heading font-extrabold text-de-black flex items-center gap-1 shadow-sm opacity-90 group-hover:opacity-100">
+                          <ZoomIn className="w-3 h-3 text-de-green" />
+                          <span>Zoom Screenshot</span>
+                        </span>
+                      </div>
+                    </button>
+
+                    {item.text && (
+                      <p className="text-xs text-de-muted font-semibold leading-relaxed line-clamp-2 italic">
+                        &ldquo;{item.text}&rdquo;
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-sm sm:text-base text-de-body font-semibold leading-relaxed italic">
+                    &ldquo;{item.text}&rdquo;
+                  </p>
+                )}
               </div>
 
               {/* Author Footer */}
@@ -135,6 +166,51 @@ export default function FeedbackClientList({ initialTestimonials }: { initialTes
         <div className="text-center py-16 bg-de-warm rounded-2xl border-2 border-de-black shadow-hard p-8">
           <p className="font-heading font-extrabold text-lg text-de-black">No feedback found in this category.</p>
           <p className="text-xs text-de-muted mt-1">Check back soon or select &apos;All Feedback&apos; above.</p>
+        </div>
+      )}
+
+      {/* Lightbox Modal for Full Screenshot View */}
+      {zoomedItem && zoomedItem.screenshot && (
+        <div
+          className="fixed inset-0 z-[1200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          onClick={() => setZoomedItem(null)}
+        >
+          <div
+            className="relative w-full max-w-2xl bg-white rounded-2xl border-3 border-de-black shadow-hard-lg overflow-hidden flex flex-col max-h-[90vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 bg-de-warm border-b-2 border-de-black flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <h3 className="font-heading font-extrabold text-sm sm:text-base text-de-black truncate">
+                  {zoomedItem.name} &bull; Verified Feedback
+                </h3>
+                <p className="text-xs text-de-muted font-semibold truncate">
+                  {zoomedItem.role} ({zoomedItem.country})
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setZoomedItem(null)}
+                className="p-1.5 rounded-lg bg-white border border-de-black text-de-black hover:bg-de-amber transition-colors shrink-0"
+                aria-label="Close Screenshot"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4 bg-[#F4F1EA] overflow-y-auto flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={zoomedItem.screenshot}
+                alt={`${zoomedItem.name} feedback screenshot`}
+                className="max-h-[68vh] w-auto object-contain rounded-xl border-2 border-de-black shadow-md"
+              />
+            </div>
+            {zoomedItem.text && (
+              <div className="p-4 bg-white border-t border-de-border text-xs sm:text-sm text-de-body font-semibold italic text-center">
+                &ldquo;{zoomedItem.text}&rdquo;
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

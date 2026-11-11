@@ -7,6 +7,8 @@ import MagneticButton from "@/components/MagneticButton";
 import Card3DTilt from "@/components/Card3DTilt";
 import { Laptop, Search, Share2, Target, Video, Youtube, CheckCircle2, MessageCircle, Globe, ShoppingCart, Code2, Smartphone, Cpu, Rocket } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Digital Marketing Services in Bahawalpur | DigitalExpert",
   description: "Explore our professional services: WordPress development, SEO, social media marketing, Google & TikTok ads, video ads creation, and YouTube automation.",

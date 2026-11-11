@@ -3,6 +3,8 @@ import { getCurrentAdmin } from "@/lib/auth";
 import { getMedia } from "@/lib/db";
 import MediaManagerClient from "./MediaManagerClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Media Library | DigitalExpert Admin",
 };

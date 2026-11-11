@@ -32,7 +32,7 @@ import {
   Rocket,
 } from "lucide-react";
 
-export const revalidate = 60; // On-demand ISR
+export const dynamic = "force-dynamic";
 
 const SERVICE_ICONS: Record<string, any> = {
   wordpress: Laptop,
@@ -506,31 +506,70 @@ export default async function HomePage() {
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((test) => (
+            {testimonials.slice(0, 6).map((test) => (
               <div
                 key={test.id}
-                className="bg-de-warm p-6 rounded-2xl border-2 border-de-black shadow-hard-sm hover:shadow-hard flex flex-col justify-between space-y-4"
+                className="bg-de-warm p-6 rounded-2xl border-2 border-de-black shadow-hard-sm hover:shadow-hard flex flex-col justify-between space-y-4 transition-all"
               >
                 <div className="space-y-3">
                   <div className="flex items-center gap-1 text-de-amber">
-                    {[...Array(test.rating)].map((_, i) => (
+                    {[...Array(test.rating || 5)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-de-amber" />
                     ))}
                   </div>
-                  <p className="text-sm text-de-body leading-relaxed font-semibold italic">
-                    &ldquo;{test.text}&rdquo;
-                  </p>
+                  {test.screenshot ? (
+                    <div className="space-y-2">
+                      <Link
+                        href="/feedback"
+                        className="block relative aspect-[4/3] w-full rounded-xl border-2 border-de-black overflow-hidden bg-white shadow-hard-sm group"
+                      >
+                        <Image
+                          src={test.screenshot}
+                          alt={`${test.name} feedback screenshot`}
+                          fill
+                          unoptimized={test.screenshot.startsWith("data:")}
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </Link>
+                      {test.text && (
+                        <p className="text-xs text-de-body leading-relaxed font-semibold italic line-clamp-2">
+                          &ldquo;{test.text}&rdquo;
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-de-body leading-relaxed font-semibold italic">
+                      &ldquo;{test.text}&rdquo;
+                    </p>
+                  )}
                 </div>
 
-                <div className="pt-4 border-t border-de-border flex items-center justify-between">
-                  <div>
-                    <h4 className="font-heading font-extrabold text-sm text-de-black">{test.name}</h4>
-                    <p className="text-xs text-de-muted font-bold">{test.role}</p>
-                    <p className="text-[11px] text-de-green font-extrabold">{test.country}</p>
+                <div className="pt-4 border-t border-de-border flex items-center gap-3">
+                  {test.photo && (
+                    <div className="relative w-10 h-10 rounded-full border-2 border-de-black overflow-hidden shrink-0 bg-white">
+                      <Image
+                        src={test.photo}
+                        alt={test.name}
+                        fill
+                        unoptimized={test.photo.startsWith("data:")}
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="min-w-0">
+                    <h4 className="font-heading font-extrabold text-sm text-de-black truncate">{test.name}</h4>
+                    <p className="text-xs text-de-muted font-bold truncate">{test.role}</p>
+                    <p className="text-[11px] text-de-green font-extrabold truncate">{test.country}</p>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10 text-center">
+            <MagneticButton href="/feedback" variant="outline">
+              View All Client & Student Feedback &rarr;
+            </MagneticButton>
           </div>
         </div>
       </section>

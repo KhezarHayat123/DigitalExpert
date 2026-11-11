@@ -21,6 +21,8 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   const courses = getCourses(true);
   return courses.map((c) => ({ slug: c.slug }));

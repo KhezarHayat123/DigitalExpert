@@ -78,6 +78,7 @@ export interface Testimonial {
   country: string;
   text: string;
   photo?: string;
+  screenshot?: string;
   rating: number;
   isSample: boolean;
   type?: "client" | "student";

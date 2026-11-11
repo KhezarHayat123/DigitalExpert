@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Testimonial } from "@/lib/types";
 import { compressImage } from "@/lib/imageCompression";
+import MediaPickerModal from "@/components/admin/MediaPickerModal";
 import {
   Plus,
   Edit2,
@@ -12,6 +13,7 @@ import {
   Star,
   Copy,
   Upload,
+  Image as ImageIcon,
   CheckCircle2,
   GraduationCap,
   Briefcase,
@@ -26,6 +28,27 @@ export default function TestimonialsManagerClient({
   const [editingItem, setEditingItem] = useState<Testimonial | null>(null);
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [mediaPickerTarget, setMediaPickerTarget] = useState<"screenshot" | "photo" | null>(null);
+
+  const saveUploadToMediaLibrary = (url: string, fileName: string) => {
+    fetch("/api/admin/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "save",
+        collection: "media",
+        item: {
+          id: `med-${Date.now()}`,
+          name: fileName,
+          url,
+          size: Math.round((url.length * 3) / 4),
+          mimeType: "image/jpeg",
+          altText: fileName,
+          uploadedAt: new Date().toISOString(),
+        },
+      }),
+    }).catch(() => {});
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,11 +136,12 @@ export default function TestimonialsManagerClient({
               name: "Client or Student Name",
               role: "CEO, Dubai Trading Co.",
               country: "Dubai, UAE",
-              text: "DigitalExpert delivered exceptional quality and speed for our business...",
+              text: "",
               rating: 5,
               type: "client",
               isSample: false,
               photo: "",
+              screenshot: "/brand/feedback-whatsapp-client.jpg",
             });
             setIsNew(true);
           }}
@@ -160,9 +184,22 @@ export default function TestimonialsManagerClient({
                   </div>
                 </div>
 
-                <p className="text-xs text-de-body font-semibold italic line-clamp-3">
-                  &ldquo;{t.text}&rdquo;
-                </p>
+                {t.screenshot ? (
+                  <div className="relative h-36 w-full rounded-xl border-2 border-de-border overflow-hidden bg-de-warm">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={t.screenshot}
+                      alt={`${t.name} screenshot`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : null}
+
+                {t.text && (
+                  <p className="text-xs text-de-body font-semibold italic line-clamp-2">
+                    &ldquo;{t.text}&rdquo;
+                  </p>
+                )}
               </div>
 
               <div className="pt-3 border-t border-de-border flex items-center justify-between">
@@ -310,6 +347,67 @@ export default function TestimonialsManagerClient({
                 </div>
               </div>
 
+              {/* Feedback Message Screenshot (Primary Showcase on /feedback) */}
+              <div className="p-3.5 rounded-xl bg-de-warm border-2 border-de-black space-y-2.5">
+                <label className="block text-xs font-extrabold uppercase text-de-black">
+                  Feedback Message Screenshot (WhatsApp / Chat Picture)
+                </label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="text"
+                    value={editingItem.screenshot || ""}
+                    onChange={(e) => setEditingItem({ ...editingItem, screenshot: e.target.value })}
+                    placeholder="/brand/feedback-whatsapp-client.jpg or upload / pick from library"
+                    className="flex-1 p-2.5 rounded-btn bg-white border border-de-border text-xs font-semibold focus:border-de-black"
+                  />
+                  {editingItem.screenshot && (
+                    <div className="relative w-16 h-12 rounded-lg border-2 border-de-black overflow-hidden shrink-0 bg-white">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={editingItem.screenshot}
+                        alt="Screenshot preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <input
+                    type="file"
+                    id="admin-review-screenshot-upload"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      try {
+                        const optimizedUrl = await compressImage(file, 1200, 0.85);
+                        setEditingItem((prev) => (prev ? { ...prev, screenshot: optimizedUrl } : null));
+                        saveUploadToMediaLibrary(optimizedUrl, file.name);
+                      } catch (err: any) {
+                        alert("Screenshot compression error: " + err.message);
+                      }
+                    }}
+                  />
+                  <label
+                    htmlFor="admin-review-screenshot-upload"
+                    className="px-3 py-1.5 rounded-btn bg-de-black text-white hover:bg-de-green text-[11px] font-bold cursor-pointer inline-flex items-center gap-1.5 transition-colors border border-de-black"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload Screenshot (PC / Mobile)</span>
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setMediaPickerTarget("screenshot")}
+                    className="px-3 py-1.5 rounded-btn bg-de-amber text-de-black hover:bg-amber-400 text-[11px] font-bold inline-flex items-center gap-1.5 transition-colors border border-de-black"
+                  >
+                    <ImageIcon className="w-3.5 h-3.5" />
+                    <span>Pick from Media Library</span>
+                  </button>
+                </div>
+              </div>
+
               {/* Photo Input with Computer Upload (Compressed) */}
               <div>
                 <label className="block text-xs font-bold uppercase text-de-muted mb-1">
@@ -336,7 +434,7 @@ export default function TestimonialsManagerClient({
                   )}
                 </div>
 
-                <div className="mt-2 flex items-center gap-2">
+                <div className="mt-2 flex flex-wrap items-center gap-2">
                   <input
                     type="file"
                     id="admin-review-file-upload"
@@ -348,6 +446,7 @@ export default function TestimonialsManagerClient({
                       try {
                         const optimizedUrl = await compressImage(file, 400, 0.85);
                         setEditingItem((prev) => (prev ? { ...prev, photo: optimizedUrl } : null));
+                        saveUploadToMediaLibrary(optimizedUrl, file.name);
                       } catch (err: any) {
                         alert("Image compression error: " + err.message);
                       }
@@ -360,7 +459,14 @@ export default function TestimonialsManagerClient({
                     <Upload className="w-3.5 h-3.5" />
                     <span>Upload Picture from Device</span>
                   </label>
-                  <span className="text-[10px] text-de-muted font-bold">Pick camera photo or avatar</span>
+                  <button
+                    type="button"
+                    onClick={() => setMediaPickerTarget("photo")}
+                    className="px-3 py-1.5 rounded-btn bg-de-warm text-de-black hover:bg-white text-[11px] font-bold inline-flex items-center gap-1.5 transition-colors border border-de-black"
+                  >
+                    <ImageIcon className="w-3.5 h-3.5" />
+                    <span>Pick from Media Library</span>
+                  </button>
                 </div>
               </div>
 
@@ -392,10 +498,12 @@ export default function TestimonialsManagerClient({
 
               {/* Review Text */}
               <div>
-                <label className="block text-xs font-bold uppercase text-de-muted mb-1">Feedback / Testimonial</label>
+                <label className="block text-xs font-bold uppercase text-de-muted mb-1">
+                  Short Caption / Message Note (Optional if screenshot uploaded)
+                </label>
                 <textarea
-                  rows={4}
-                  required
+                  rows={3}
+                  required={!editingItem.screenshot}
                   value={editingItem.text}
                   onChange={(e) => setEditingItem({ ...editingItem, text: e.target.value })}
                   placeholder="Share details of their feedback or success results..."
@@ -423,6 +531,23 @@ export default function TestimonialsManagerClient({
           </div>
         </div>
       )}
+
+      <MediaPickerModal
+        isOpen={mediaPickerTarget !== null}
+        onClose={() => setMediaPickerTarget(null)}
+        title={
+          mediaPickerTarget === "screenshot"
+            ? "Select Feedback Message Screenshot"
+            : "Select Client / Student Avatar"
+        }
+        onSelect={(url) => {
+          setEditingItem((prev) => {
+            if (!prev) return null;
+            if (mediaPickerTarget === "screenshot") return { ...prev, screenshot: url };
+            return { ...prev, photo: url };
+          });
+        }}
+      />
     </div>
   );
 }
