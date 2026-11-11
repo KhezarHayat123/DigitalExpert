@@ -62,9 +62,15 @@ export default function TestimonialsManagerClient({
         body: JSON.stringify({ action: "save", collection: "testimonials", item: editingItem }),
       });
       if (!res.ok) throw new Error("Failed to save review");
+      const resJson = await res.json().catch(() => ({}));
 
       if (isNew) setTestimonials([editingItem, ...testimonials]);
       else setTestimonials(testimonials.map((t) => (t.id === editingItem.id ? editingItem : t)));
+      if (resJson?.persisted === "temporary") {
+        alert(
+          "Saved ONLY in temporary session! Connect free Upstash Redis in Vercel Storage or GITHUB_TOKEN in Vercel Env Vars so live /feedback updates permanently."
+        );
+      }
       setEditingItem(null);
       setIsNew(false);
     } catch (e: any) {

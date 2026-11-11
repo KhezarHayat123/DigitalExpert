@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getCourseBySlug, getCourses } from "@/lib/db";
+import { getCourseBySlug, getCourses, syncDatabaseFromCloud } from "@/lib/db";
 import DetailHeroVisual from "@/components/heroes/DetailHeroVisual";
 import SectionHeader from "@/components/SectionHeader";
 import MagneticButton from "@/components/MagneticButton";
@@ -29,6 +29,7 @@ export async function generateStaticParams() {
 }
 
 export default async function CourseDetailPage({ params }: { params: { slug: string } }) {
+  await syncDatabaseFromCloud();
   const course = getCourseBySlug(params.slug);
 
   if (!course) {

@@ -5,6 +5,7 @@ import {
   getDatabase,
   isDiskWritable,
   persistDatabaseRemotely,
+  syncDatabaseFromCloud,
   saveCourse,
   deleteCourse,
   saveService,
@@ -31,7 +32,7 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const db = getDatabase();
+  const db = await syncDatabaseFromCloud();
   return NextResponse.json({ success: true, data: db });
 }
 
@@ -53,6 +54,7 @@ export async function POST(req: Request) {
   }
 
   try {
+    await syncDatabaseFromCloud();
     const { action, collection, item, id } = await req.json();
 
     // Only full admin can modify settings or users
@@ -75,10 +77,10 @@ export async function POST(req: Request) {
 
       revalidateSiteRoutes();
       const diskOk = isDiskWritable();
-      const githubOk = diskOk ? false : await persistDatabaseRemotely(`Admin save ${collection}`);
+      const cloudOk = diskOk ? false : await persistDatabaseRemotely(`Admin save ${collection}`);
       return NextResponse.json({
         success: true,
-        persisted: diskOk ? "disk" : githubOk ? "github" : "temporary",
+        persisted: diskOk ? "disk" : cloudOk ? "cloud" : "temporary",
       });
     }
 
@@ -95,10 +97,10 @@ export async function POST(req: Request) {
 
       revalidateSiteRoutes();
       const diskOk = isDiskWritable();
-      const githubOk = diskOk ? false : await persistDatabaseRemotely(`Admin delete ${collection}`);
+      const cloudOk = diskOk ? false : await persistDatabaseRemotely(`Admin delete ${collection}`);
       return NextResponse.json({
         success: true,
-        persisted: diskOk ? "disk" : githubOk ? "github" : "temporary",
+        persisted: diskOk ? "disk" : cloudOk ? "cloud" : "temporary",
       });
     }
 

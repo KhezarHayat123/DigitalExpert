@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentAdmin } from "@/lib/auth";
-import { getMedia } from "@/lib/db";
+import { getMedia, syncDatabaseFromCloud } from "@/lib/db";
 import MediaManagerClient from "./MediaManagerClient";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +15,7 @@ export default async function AdminMediaPage() {
     redirect("/admin/login");
   }
 
+  await syncDatabaseFromCloud();
   const media = getMedia();
   return <MediaManagerClient initialMedia={media} />;
 }

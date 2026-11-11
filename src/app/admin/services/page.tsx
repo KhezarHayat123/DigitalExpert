@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentAdmin } from "@/lib/auth";
-import { getServices } from "@/lib/db";
+import { getServices, syncDatabaseFromCloud } from "@/lib/db";
 import ServicesManagerClient from "./ServicesManagerClient";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +15,7 @@ export default async function AdminServicesPage() {
     redirect("/admin/login");
   }
 
+  await syncDatabaseFromCloud();
   const services = getServices();
   return <ServicesManagerClient initialServices={services} />;
 }

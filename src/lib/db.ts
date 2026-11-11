@@ -127,48 +127,204 @@ export function saveDatabase(data: DatabaseSchema): void {
   }
 }
 
+function getRedisConfig(): { url: string; token: string } | null {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  return { url: url.replace(/\/$/, ""), token };
+}
+
+export function getStorageMode(): "disk" | "cloud" | "temporary" {
+  if (isDiskWritable()) return "disk";
+  if (getRedisConfig() || process.env.GITHUB_TOKEN) return "cloud";
+  return "temporary";
+}
+
+let cachedCloudVersion: string | null = null;
+let lastGitHubCheckMs = 0;
+let lastGitHubEtag: string | null = null;
+
 /**
- * Optional persistent remote backup to GitHub Contents API if GITHUB_TOKEN is configured
- * in Vercel Environment Variables (e.g., GITHUB_TOKEN + optional GITHUB_REPO="owner/repo").
+ * Pull latest shared state from Upstash Redis / Vercel KV (instant) or GitHub (fallback)
+ * when running on read-only serverless hosting like Vercel.
+ */
+export async function syncDatabaseFromCloud(force = false): Promise<DatabaseSchema> {
+  const localDb = getDatabase();
+  if (isDiskWritable()) return localDb;
+
+  const redis = getRedisConfig();
+  if (redis) {
+    try {
+      const verRes = await fetch(`${redis.url}/get/de:version`, {
+        headers: { Authorization: `Bearer ${redis.token}` },
+        cache: "no-store",
+      });
+      if (verRes.ok) {
+        const verJson = await verRes.json();
+        const remoteVersion = verJson?.result ? String(verJson.result) : null;
+        if (remoteVersion && (remoteVersion !== cachedCloudVersion || force)) {
+          const pipeRes = await fetch(`${redis.url}/pipeline`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${redis.token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify([
+              ["GET", "de:courses"],
+              ["GET", "de:services"],
+              ["GET", "de:testimonials"],
+              ["GET", "de:media"],
+              ["GET", "de:core"],
+            ]),
+            cache: "no-store",
+          });
+          if (pipeRes.ok) {
+            const parts = await pipeRes.json();
+            const merged: DatabaseSchema = { ...localDb };
+            if (parts?.[0]?.result) merged.courses = JSON.parse(parts[0].result);
+            if (parts?.[1]?.result) merged.services = JSON.parse(parts[1].result);
+            if (parts?.[2]?.result) merged.testimonials = JSON.parse(parts[2].result);
+            if (parts?.[3]?.result) merged.media = JSON.parse(parts[3].result);
+            if (parts?.[4]?.result) {
+              const core = JSON.parse(parts[4].result);
+              Object.assign(merged, core);
+            }
+            memoryDb = normalizeSchema(merged);
+            cachedCloudVersion = remoteVersion;
+            return memoryDb;
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("Redis cloud sync check failed:", err);
+    }
+    return localDb;
+  }
+
+  const ghToken = process.env.GITHUB_TOKEN;
+  if (ghToken && (force || Date.now() - lastGitHubCheckMs > 3000)) {
+    lastGitHubCheckMs = Date.now();
+    const repo = process.env.GITHUB_REPO || "KhezarHayat123/DigitalExpert";
+    const branch = process.env.GITHUB_BRANCH || "main";
+    const apiUrl = `https://api.github.com/repos/${repo}/contents/data/db.json?ref=${branch}`;
+    try {
+      const headers: Record<string, string> = {
+        Authorization: `Bearer ${ghToken}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      };
+      if (lastGitHubEtag && !force) headers["If-None-Match"] = lastGitHubEtag;
+
+      const res = await fetch(apiUrl, { headers, cache: "no-store" });
+      if (res.status === 200) {
+        const etag = res.headers.get("etag");
+        if (etag) lastGitHubEtag = etag;
+        const fileData = await res.json();
+        let rawJson = "";
+        if (fileData.content) {
+          rawJson = Buffer.from(fileData.content, "base64").toString("utf-8");
+        } else if (fileData.sha) {
+          const blobRes = await fetch(`https://api.github.com/repos/${repo}/git/blobs/${fileData.sha}`, {
+            headers: {
+              Authorization: `Bearer ${ghToken}`,
+              Accept: "application/vnd.github.raw+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+            },
+            cache: "no-store",
+          });
+          if (blobRes.ok) rawJson = await blobRes.text();
+        }
+        if (rawJson) {
+          memoryDb = normalizeSchema(JSON.parse(rawJson));
+          return memoryDb;
+        }
+      }
+    } catch (err) {
+      console.warn("GitHub cloud sync check failed:", err);
+    }
+  }
+
+  return localDb;
+}
+
+/**
+ * Persistent remote storage sync to Upstash Redis / Vercel KV (instant live updates)
+ * and/or GitHub Contents API if configured in Vercel Environment Variables.
  */
 export async function persistDatabaseRemotely(commitMessage = "CMS update via Admin Panel"): Promise<boolean> {
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) return false;
+  const db = getDatabase();
+  let savedAnywhere = false;
 
-  const repo = process.env.GITHUB_REPO || "KhezarHayat123/DigitalExpert";
-  const branch = process.env.GITHUB_BRANCH || "main";
-  const apiUrl = `https://api.github.com/repos/${repo}/contents/data/db.json`;
-
-  try {
-    const headers: Record<string, string> = {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/vnd.github+json",
-      "Content-Type": "application/json",
-      "X-GitHub-Api-Version": "2022-11-28",
-    };
-
-    const getRes = await fetch(`${apiUrl}?ref=${branch}`, { headers, cache: "no-store" });
-    if (!getRes.ok) return false;
-    const currentFile = await getRes.json();
-
-    const db = getDatabase();
-    const contentBase64 = Buffer.from(JSON.stringify(db, null, 2) + "\n", "utf-8").toString("base64");
-
-    const putRes = await fetch(apiUrl, {
-      method: "PUT",
-      headers,
-      body: JSON.stringify({
-        message: commitMessage,
-        content: contentBase64,
-        sha: currentFile.sha,
-        branch,
-      }),
-    });
-    return putRes.ok;
-  } catch (err) {
-    console.warn("Optional GitHub DB persistence failed:", err);
-    return false;
+  const redis = getRedisConfig();
+  if (redis) {
+    try {
+      const version = `${Date.now()}`;
+      const { courses, services, testimonials, media, ...core } = db;
+      const pipeRes = await fetch(`${redis.url}/pipeline`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${redis.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([
+          ["SET", "de:courses", JSON.stringify(courses)],
+          ["SET", "de:services", JSON.stringify(services)],
+          ["SET", "de:testimonials", JSON.stringify(testimonials)],
+          ["SET", "de:media", JSON.stringify(media)],
+          ["SET", "de:core", JSON.stringify(core)],
+          ["SET", "de:version", version],
+        ]),
+        cache: "no-store",
+      });
+      if (pipeRes.ok) {
+        cachedCloudVersion = version;
+        savedAnywhere = true;
+      }
+    } catch (err) {
+      console.warn("Redis persistence failed:", err);
+    }
   }
+
+  const token = process.env.GITHUB_TOKEN;
+  if (token) {
+    const repo = process.env.GITHUB_REPO || "KhezarHayat123/DigitalExpert";
+    const branch = process.env.GITHUB_BRANCH || "main";
+    const apiUrl = `https://api.github.com/repos/${repo}/contents/data/db.json`;
+
+    try {
+      const headers: Record<string, string> = {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      };
+
+      const getRes = await fetch(`${apiUrl}?ref=${branch}`, { headers, cache: "no-store" });
+      if (getRes.ok) {
+        const currentFile = await getRes.json();
+        const contentBase64 = Buffer.from(JSON.stringify(db, null, 2) + "\n", "utf-8").toString("base64");
+
+        const putRes = await fetch(apiUrl, {
+          method: "PUT",
+          headers,
+          body: JSON.stringify({
+            message: commitMessage,
+            content: contentBase64,
+            sha: currentFile.sha,
+            branch,
+          }),
+        });
+        if (putRes.ok) {
+          lastGitHubEtag = null;
+          savedAnywhere = true;
+        }
+      }
+    } catch (err) {
+      console.warn("Optional GitHub DB persistence failed:", err);
+    }
+  }
+
+  return savedAnywhere;
 }
 
 // Courses

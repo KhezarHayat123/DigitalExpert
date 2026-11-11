@@ -1,14 +1,17 @@
-import { getFaqs } from "@/lib/db";
+import { getFaqs, syncDatabaseFromCloud } from "@/lib/db";
 import SectionHeader from "@/components/SectionHeader";
 import MagneticButton from "@/components/MagneticButton";
 import { HelpCircle, ChevronRight, MessageCircle } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Frequently Asked Questions (FAQs) | DigitalExpert",
   description: "Find answers to common questions about DigitalExpert courses, fees, admissions, agency services, and payment methods.",
 };
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  await syncDatabaseFromCloud();
   const faqs = getFaqs();
   const groups = ["All", "General", "Courses", "Services", "Payment", "Admission"];
 

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getServiceBySlug, getServices } from "@/lib/db";
+import { getServiceBySlug, getServices, syncDatabaseFromCloud } from "@/lib/db";
 import DetailHeroVisual from "@/components/heroes/DetailHeroVisual";
 import SectionHeader from "@/components/SectionHeader";
 import MagneticButton from "@/components/MagneticButton";
@@ -49,6 +49,7 @@ const SERVICE_ICONS: Record<string, any> = {
 };
 
 export default async function ServiceDetailPage({ params }: { params: { slug: string } }) {
+  await syncDatabaseFromCloud();
   const service = getServiceBySlug(params.slug);
 
   if (!service) {

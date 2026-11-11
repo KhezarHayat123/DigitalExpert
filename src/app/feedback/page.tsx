@@ -1,4 +1,4 @@
-import { getTestimonials } from "@/lib/db";
+import { getTestimonials, syncDatabaseFromCloud } from "@/lib/db";
 import Marquee from "@/components/Marquee";
 import SectionHeader from "@/components/SectionHeader";
 import MagneticButton from "@/components/MagneticButton";
@@ -12,7 +12,8 @@ export const metadata = {
   description: "Read genuine feedback and reviews from our global business clients across UAE, UK, and Saudi Arabia, as well as students from our physical campus in Bahawalpur.",
 };
 
-export default function FeedbackPage() {
+export default async function FeedbackPage() {
+  await syncDatabaseFromCloud();
   const testimonials = getTestimonials();
 
   return (

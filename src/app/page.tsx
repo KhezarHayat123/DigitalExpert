@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getCourses, getServices, getProjects, getTestimonials, getFaqs } from "@/lib/db";
+import { getCourses, getServices, getProjects, getTestimonials, getFaqs, syncDatabaseFromCloud } from "@/lib/db";
 import HomeHeroVisual from "@/components/heroes/HomeHeroVisual";
 import Marquee from "@/components/Marquee";
 import SectionHeader from "@/components/SectionHeader";
@@ -50,6 +50,7 @@ const SERVICE_ICONS: Record<string, any> = {
 };
 
 export default async function HomePage() {
+  await syncDatabaseFromCloud();
   const courses = getCourses(true).slice(0, 3);
   const services = getServices(true).slice(0, 3);
   const projects = getProjects().slice(0, 4);

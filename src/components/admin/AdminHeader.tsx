@@ -9,9 +9,10 @@ interface AdminHeaderProps {
     name: string;
     role: string;
   };
+  storageMode?: "disk" | "cloud" | "temporary";
 }
 
-export default function AdminHeader({ user }: AdminHeaderProps) {
+export default function AdminHeader({ user, storageMode = "disk" }: AdminHeaderProps) {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -30,9 +31,19 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
         <span className="font-heading font-extrabold text-sm text-de-black uppercase tracking-wider">
           DigitalExpert Dashboard
         </span>
-        <span className="text-xs px-2.5 py-0.5 rounded-full bg-de-warm border border-de-border font-bold text-de-muted">
+        <span className="hidden md:inline text-xs px-2.5 py-0.5 rounded-full bg-de-warm border border-de-border font-bold text-de-muted">
           University Chowk, Bahawalpur
         </span>
+        {storageMode === "cloud" && (
+          <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-green-100 border border-green-400 font-extrabold text-green-800">
+            Cloud Sync Active
+          </span>
+        )}
+        {storageMode === "temporary" && (
+          <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-100 border border-amber-500 font-extrabold text-amber-900">
+            Temporary Mode (Read-Only Hosting)
+          </span>
+        )}
       </div>
 
       <div className="flex items-center gap-4">

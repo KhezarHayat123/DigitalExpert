@@ -1,4 +1,4 @@
-import { getCourses } from "@/lib/db";
+import { getCourses, syncDatabaseFromCloud } from "@/lib/db";
 import CoursesHeroVisual from "@/components/heroes/CoursesHeroVisual";
 import Marquee from "@/components/Marquee";
 import SectionHeader from "@/components/SectionHeader";
@@ -13,7 +13,8 @@ export const metadata = {
   description: "Join practical digital marketing training at University Chowk, Bahawalpur. WordPress, SEO, Paid Ads, Video Ads, Social Media, and YouTube Automation.",
 };
 
-export default function CoursesPage() {
+export default async function CoursesPage() {
+  await syncDatabaseFromCloud();
   const courses = getCourses(true);
 
   return (

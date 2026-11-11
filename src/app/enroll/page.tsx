@@ -1,8 +1,10 @@
 import { Suspense } from "react";
-import { getCourses, getSettings } from "@/lib/db";
+import { getCourses, getSettings, syncDatabaseFromCloud } from "@/lib/db";
 import EnrollHeroVisual from "@/components/heroes/EnrollHeroVisual";
 import Marquee from "@/components/Marquee";
 import EnrollFormClient from "./EnrollFormClient";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Enroll in Courses | DigitalExpert Bahawalpur",
@@ -13,7 +15,8 @@ export const metadata = {
   },
 };
 
-export default function EnrollPage() {
+export default async function EnrollPage() {
+  await syncDatabaseFromCloud();
   const courses = getCourses(true);
   const settings = getSettings();
 

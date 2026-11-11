@@ -58,8 +58,15 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
       });
 
       if (!res.ok) throw new Error("Failed to save service");
+      const resJson = await res.json().catch(() => ({}));
       setServices(services.map((s) => (s.id === selectedService.id ? selectedService : s)));
-      alert("Service & package prices saved successfully!");
+      if (resJson?.persisted === "temporary") {
+        alert(
+          "Saved ONLY in current temporary server session! Because Upstash Redis or GITHUB_TOKEN is not yet connected on Vercel, live website (/services) still reads old files. Connect free Upstash Redis in Vercel Storage or add GITHUB_TOKEN, OR edit locally and Push via GitHub Desktop."
+        );
+      } else {
+        alert("Service & package prices saved and synced to live website!");
+      }
       setSelectedService(null);
     } catch (e: any) {
       alert(e.message);

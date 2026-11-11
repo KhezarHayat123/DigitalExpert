@@ -1,16 +1,19 @@
-import { getProjects } from "@/lib/db";
+import { getProjects, syncDatabaseFromCloud } from "@/lib/db";
 import ProjectsHeroVisual from "@/components/heroes/ProjectsHeroVisual";
 import Marquee from "@/components/Marquee";
 import SectionHeader from "@/components/SectionHeader";
 import MagneticButton from "@/components/MagneticButton";
 import ProjectsFilterClient from "./ProjectsFilterClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Completed Projects & Portfolio | DigitalExpert",
   description: "Explore our completed client projects across WordPress web engineering, Google Page 1 SEO, paid ads scaling, and commercial video creation.",
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  await syncDatabaseFromCloud();
   const projects = getProjects();
 
   return (

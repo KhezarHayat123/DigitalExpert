@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getTeam } from "@/lib/db";
+import { getTeam, syncDatabaseFromCloud } from "@/lib/db";
 import AboutHeroVisual from "@/components/heroes/AboutHeroVisual";
 import Marquee from "@/components/Marquee";
 import SectionHeader from "@/components/SectionHeader";
@@ -23,12 +23,15 @@ import {
   MessageCircle,
 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "About DigitalExpert | Founder Khezar Hayat & Team in Bahawalpur",
   description: "Learn about DigitalExpert, founded by Khezar Hayat. Over 5 years of digital marketing expertise serving 300+ clients in the UAE, Saudi Arabia, UK and Pakistan.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  await syncDatabaseFromCloud();
   const team = getTeam();
 
   return (

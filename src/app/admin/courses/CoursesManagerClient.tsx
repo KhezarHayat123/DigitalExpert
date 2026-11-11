@@ -51,11 +51,17 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
       });
 
       if (!res.ok) throw new Error("Failed to save course");
+      const resJson = await res.json().catch(() => ({}));
 
       if (isNew) {
         setCourses([...courses, editingCourse]);
       } else {
         setCourses(courses.map((c) => (c.id === editingCourse.id ? editingCourse : c)));
+      }
+      if (resJson?.persisted === "temporary") {
+        alert(
+          "Saved ONLY in temporary session! Connect free Upstash Redis in Vercel Storage or GITHUB_TOKEN in Vercel Env Vars so live /courses updates permanently."
+        );
       }
       setEditingCourse(null);
       setIsNew(false);

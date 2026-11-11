@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getServices } from "@/lib/db";
+import { getServices, syncDatabaseFromCloud } from "@/lib/db";
 import ServicesHeroVisual from "@/components/heroes/ServicesHeroVisual";
 import Marquee from "@/components/Marquee";
 import SectionHeader from "@/components/SectionHeader";
@@ -29,7 +29,8 @@ const SERVICE_ICONS: Record<string, any> = {
   "app-deployment": Rocket,
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  await syncDatabaseFromCloud();
   const services = getServices(true);
 
   return (

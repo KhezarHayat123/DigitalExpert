@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getSettings } from "@/lib/db";
+import { getSettings, syncDatabaseFromCloud } from "@/lib/db";
 import ContactHeroVisual from "@/components/heroes/ContactHeroVisual";
 import Marquee from "@/components/Marquee";
 import SectionHeader from "@/components/SectionHeader";
@@ -7,12 +7,15 @@ import ContactFormClient from "./ContactFormClient";
 import CopyChannelButton from "@/components/CopyChannelButton";
 import { MapPin, Phone, Mail, Globe, ExternalLink } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Contact DigitalExpert | University Chowk, Bahawalpur & WhatsApp Support",
   description: "Get in touch with DigitalExpert at University Chowk, Bahawalpur. Call or WhatsApp 03124051296, email info@digitalexpert.pk, or submit our online contact form.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  await syncDatabaseFromCloud();
   const settings = getSettings();
 
   return (

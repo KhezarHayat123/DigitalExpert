@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentAdmin } from "@/lib/auth";
-import { getTestimonials } from "@/lib/db";
+import { getTestimonials, syncDatabaseFromCloud } from "@/lib/db";
 import TestimonialsManagerClient from "./TestimonialsManagerClient";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +15,7 @@ export default async function AdminTestimonialsPage() {
     redirect("/admin/login");
   }
 
+  await syncDatabaseFromCloud();
   const testimonials = getTestimonials();
   return <TestimonialsManagerClient initialTestimonials={testimonials} />;
 }

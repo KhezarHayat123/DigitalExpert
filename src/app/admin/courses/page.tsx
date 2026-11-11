@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getCurrentAdmin } from "@/lib/auth";
-import { getCourses } from "@/lib/db";
+import { getCourses, syncDatabaseFromCloud } from "@/lib/db";
 import CoursesManagerClient from "./CoursesManagerClient";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +15,7 @@ export default async function AdminCoursesPage() {
     redirect("/admin/login");
   }
 
+  await syncDatabaseFromCloud();
   const courses = getCourses();
   return <CoursesManagerClient initialCourses={courses} />;
 }
