@@ -190,6 +190,8 @@ export default async function HomePage() {
                       src={service.image}
                       alt={`${service.name} illustration`}
                       fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      unoptimized={service.image.startsWith("data:") || service.image.startsWith("/api/")}
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     {/* Floating Round Icon Badge */}
@@ -251,6 +253,8 @@ export default async function HomePage() {
                     src={course.image}
                     alt={`${course.title} illustration`}
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    unoptimized={course.image.startsWith("data:") || course.image.startsWith("/api/")}
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute top-3 left-3 bg-de-black text-white text-[11px] font-heading font-extrabold px-3 py-1 rounded-full border border-white/20">
@@ -435,6 +439,8 @@ export default async function HomePage() {
                     src={proj.image}
                     alt={proj.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    unoptimized={proj.image.startsWith("data:") || proj.image.startsWith("/api/")}
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute top-3 left-3 bg-de-black text-white text-xs font-heading font-extrabold px-3 py-1 rounded-full border border-white/20">
@@ -528,7 +534,8 @@ export default async function HomePage() {
                           src={test.screenshot}
                           alt={`${test.name} feedback screenshot`}
                           fill
-                          unoptimized={test.screenshot.startsWith("data:")}
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          unoptimized={test.screenshot.startsWith("data:") || test.screenshot.startsWith("/api/")}
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </Link>
@@ -552,7 +559,8 @@ export default async function HomePage() {
                         src={test.photo}
                         alt={test.name}
                         fill
-                        unoptimized={test.photo.startsWith("data:")}
+                        sizes="40px"
+                        unoptimized={test.photo.startsWith("data:") || test.photo.startsWith("/api/")}
                         className="object-cover"
                       />
                     </div>

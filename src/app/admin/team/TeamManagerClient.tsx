@@ -85,7 +85,7 @@ export default function TeamManagerClient({ initialTeam }: { initialTeam: TeamMe
           <div key={m.id} className="bg-white rounded-2xl border-2 border-de-black shadow-hard overflow-hidden flex flex-col justify-between">
             <div>
               <div className="relative aspect-[4/3] w-full bg-[#0B1528] border-b border-de-border">
-                <Image src={m.photo} alt={m.name} fill className="object-cover object-top" />
+                <Image src={m.photo} alt={m.name} fill sizes="128px" unoptimized={m.photo.startsWith("data:") || m.photo.startsWith("/api/")} className="object-cover object-top" />
                 {m.experienceBadge && (
                   <span className="absolute top-3 left-3 bg-de-amber text-de-black font-extrabold text-[10px] px-2.5 py-0.5 rounded-full border border-de-black">
                     {m.experienceBadge}

@@ -247,6 +247,50 @@ export async function syncDatabaseFromCloud(force = false): Promise<DatabaseSche
   return localDb;
 }
 
+const mediaBinCache = new Map<string, string>();
+const pendingDeletedMediaIds = new Set<string>();
+
+/**
+ * Retrieve raw data URL or remote/local image path for a Media Library item ID.
+ */
+export async function getMediaBinaryById(id: string): Promise<{ url: string; mimeType?: string } | null> {
+  const cached = mediaBinCache.get(id);
+  if (cached) return { url: cached };
+
+  const db = await syncDatabaseFromCloud();
+  const item = db.media.find((m) => m.id === id);
+  if (item && item.url.startsWith("data:")) {
+    mediaBinCache.set(id, item.url);
+    return { url: item.url, mimeType: item.mimeType };
+  }
+
+  const redis = getRedisConfig();
+  if (redis) {
+    try {
+      const res = await fetch(`${redis.url}/get/${encodeURIComponent(`de:media-bin:${id}`)}`, {
+        headers: { Authorization: `Bearer ${redis.token}` },
+        cache: "no-store",
+      });
+      if (res.ok) {
+        const json = await res.json();
+        if (json?.result) {
+          const val = String(json.result);
+          mediaBinCache.set(id, val);
+          return { url: val, mimeType: item?.mimeType };
+        }
+      }
+    } catch {
+      // Ignore transient Redis read errors
+    }
+  }
+
+  if (item?.url && !item.url.startsWith("/api/media/")) {
+    return { url: item.url, mimeType: item.mimeType };
+  }
+
+  return null;
+}
+
 /**
  * Persistent remote storage sync to Upstash Redis / Vercel KV (instant live updates)
  * and/or GitHub Contents API if configured in Vercel Environment Variables.
@@ -260,23 +304,39 @@ export async function persistDatabaseRemotely(commitMessage = "CMS update via Ad
     try {
       const version = `${Date.now()}`;
       const { courses, services, testimonials, media, ...core } = db;
+      const commands: string[][] = [];
+      const lightweightMedia = media.map((m) => {
+        if (m.url.startsWith("data:")) {
+          mediaBinCache.set(m.id, m.url);
+          commands.push(["SET", `de:media-bin:${m.id}`, m.url]);
+          return { ...m, url: `/api/media/${m.id}` };
+        }
+        return m;
+      });
+      for (const delId of Array.from(pendingDeletedMediaIds)) {
+        commands.push(["DEL", `de:media-bin:${delId}`]);
+      }
+
+      commands.push(
+        ["SET", "de:courses", JSON.stringify(courses)],
+        ["SET", "de:services", JSON.stringify(services)],
+        ["SET", "de:testimonials", JSON.stringify(testimonials)],
+        ["SET", "de:media", JSON.stringify(lightweightMedia)],
+        ["SET", "de:core", JSON.stringify(core)],
+        ["SET", "de:version", version]
+      );
+
       const pipeRes = await fetch(`${redis.url}/pipeline`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${redis.token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify([
-          ["SET", "de:courses", JSON.stringify(courses)],
-          ["SET", "de:services", JSON.stringify(services)],
-          ["SET", "de:testimonials", JSON.stringify(testimonials)],
-          ["SET", "de:media", JSON.stringify(media)],
-          ["SET", "de:core", JSON.stringify(core)],
-          ["SET", "de:version", version],
-        ]),
+        body: JSON.stringify(commands),
         cache: "no-store",
       });
       if (pipeRes.ok) {
+        pendingDeletedMediaIds.clear();
         cachedCloudVersion = version;
         savedAnywhere = true;
       }
@@ -609,13 +669,23 @@ export function getMedia(): MediaFile[] {
 
 export function addMediaFile(file: MediaFile, userEmail = "admin"): void {
   const db = getDatabase();
-  db.media.unshift(file);
+  if (file.url.startsWith("data:")) {
+    mediaBinCache.set(file.id, file.url);
+  }
+  const existingIdx = db.media.findIndex((m) => m.id === file.id);
+  if (existingIdx >= 0) {
+    db.media[existingIdx] = file;
+  } else {
+    db.media.unshift(file);
+  }
   addAuditLog("Upload Media", userEmail, `Uploaded file ${file.name}`);
   saveDatabase(db);
 }
 
 export function deleteMediaFile(id: string, userEmail = "admin"): void {
   const db = getDatabase();
+  mediaBinCache.delete(id);
+  pendingDeletedMediaIds.add(id);
   db.media = db.media.filter((m) => m.id !== id);
   saveDatabase(db);
 }

@@ -257,6 +257,8 @@ export default async function AboutPage() {
                     src={member.photo}
                     alt={member.name}
                     fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    unoptimized={member.photo.startsWith("data:") || member.photo.startsWith("/api/")}
                     className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
                   {member.experienceBadge && (

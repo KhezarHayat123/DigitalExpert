@@ -229,6 +229,9 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
                     src={course.image}
                     alt={course.title}
                     fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    unoptimized={course.image.startsWith("data:") || course.image.startsWith("/api/")}
                     className="object-cover"
                   />
                 </div>

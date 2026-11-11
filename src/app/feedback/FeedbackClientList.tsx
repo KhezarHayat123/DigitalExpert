@@ -134,7 +134,8 @@ export default function FeedbackClientList({ initialTestimonials }: { initialTes
                       src={item.photo}
                       alt={item.name}
                       fill
-                      unoptimized={item.photo.startsWith("data:")}
+                      sizes="48px"
+                      unoptimized={item.photo.startsWith("data:") || item.photo.startsWith("/api/")}
                       className="object-cover"
                     />
                   ) : (

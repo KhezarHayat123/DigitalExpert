@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { MediaFile } from "@/lib/types";
-import { compressImage } from "@/lib/imageCompression";
+import { uploadImageAndGetMediaUrl } from "@/lib/imageCompression";
 import { Upload, Copy, Check, Trash2, Link as LinkIcon, Plus } from "lucide-react";
 
 export default function MediaManagerClient({ initialMedia }: { initialMedia: MediaFile[] }) {
@@ -16,8 +16,9 @@ export default function MediaManagerClient({ initialMedia }: { initialMedia: Med
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const copyUrl = (id: string, url: string) => {
+    const shareableUrl = url.startsWith("data:") ? `/api/media/${id}` : url;
     if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText(url);
+      navigator.clipboard.writeText(shareableUrl);
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 2000);
     }
@@ -29,41 +30,14 @@ export default function MediaManagerClient({ initialMedia }: { initialMedia: Med
 
     setUploading(true);
     try {
-      // Compress camera/device photos on client to lightweight Web-optimized JPEG
-      const optimizedUrl = await compressImage(file, 1200, 0.82);
-      const newFile: MediaFile = {
-        id: `media-${Date.now()}`,
-        name: file.name,
-        url: optimizedUrl,
-        size: Math.round(optimizedUrl.length * 0.75),
-        mimeType: "image/jpeg",
-        altText: file.name,
-        uploadedAt: new Date().toISOString(),
-        createdAt: new Date().toISOString(),
-      };
-
-      const res = await fetch("/api/admin/data", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "save",
-          collection: "media",
-          item: newFile,
-        }),
-      });
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData?.error || "Failed to save image to media library");
-      }
-      const data = await res.json().catch(() => ({}));
-      setMedia([newFile, ...media]);
-      if (data?.persisted === "temporary") {
+      const { mediaItem, persisted } = await uploadImageAndGetMediaUrl(file, 1000, 0.78);
+      setMedia([mediaItem, ...media]);
+      if (persisted === "temporary") {
         alert(
-          "Picture uploaded to active session! You can pick it now via 'Pick from Media Library' in Courses, Services, or Feedback. Note: On free serverless hosting without GITHUB_TOKEN configured, edits reset after container restart."
+          "Picture uploaded to active temporary session only! Connect free Upstash Redis in Vercel Storage or GITHUB_TOKEN so uploaded images stay saved on the live website."
         );
       } else {
-        alert("Picture uploaded successfully! Click 'Pick from Media Library' inside any Course, Service, or Feedback card, or 'Copy URL'.");
+        alert("Picture uploaded successfully! Click 'Pick from Media Library' inside any Course, Service, or Feedback card, or click 'Copy URL'.");
       }
     } catch (err: any) {
       alert("Upload error: " + err.message);

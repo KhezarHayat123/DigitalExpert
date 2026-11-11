@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MediaFile } from "@/lib/types";
-import { compressImage } from "@/lib/imageCompression";
+import { uploadImageAndGetMediaUrl } from "@/lib/imageCompression";
 import { X, Upload, Search, Check, ImageIcon, RefreshCw } from "lucide-react";
 
 interface MediaPickerModalProps {
@@ -53,26 +53,9 @@ export default function MediaPickerModal({
     setUploading(true);
     setError("");
     try {
-      const optimizedUrl = await compressImage(file, 1200, 0.82);
-      const newMedia: MediaFile = {
-        id: `med-${Date.now()}`,
-        name: file.name,
-        url: optimizedUrl,
-        size: Math.round((optimizedUrl.length * 3) / 4),
-        mimeType: "image/jpeg",
-        altText: file.name.replace(/\.[^.]+$/, ""),
-        uploadedAt: new Date().toISOString(),
-      };
-
-      const res = await fetch("/api/admin/data", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "save", collection: "media", item: newMedia }),
-      });
-
-      if (!res.ok) throw new Error("Failed to save uploaded image");
-      setMedia((prev) => [newMedia, ...prev]);
-      onSelect(optimizedUrl);
+      const { url, mediaItem } = await uploadImageAndGetMediaUrl(file, 1000, 0.78);
+      setMedia((prev) => [mediaItem, ...prev]);
+      onSelect(url);
       onClose();
     } catch (err: any) {
       setError("Upload failed: " + (err.message || "Unknown error"));
@@ -181,7 +164,8 @@ export default function MediaPickerModal({
                   key={item.id}
                   type="button"
                   onClick={() => {
-                    onSelect(item.url);
+                    const selectedUrl = item.url.startsWith("data:") ? `/api/media/${item.id}` : item.url;
+                    onSelect(selectedUrl);
                     onClose();
                   }}
                   className="group bg-white rounded-xl border-2 border-de-border hover:border-de-black overflow-hidden text-left flex flex-col transition-all hover:shadow-md focus:outline-none"

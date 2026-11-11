@@ -44,6 +44,8 @@ export default function ProjectsFilterClient({ initialProjects }: { initialProje
                 src={proj.image}
                 alt={proj.title}
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                unoptimized={proj.image.startsWith("data:") || proj.image.startsWith("/api/")}
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute top-3 left-3 bg-de-black text-white text-[11px] font-heading font-extrabold px-3 py-1 rounded-full border border-white/20">

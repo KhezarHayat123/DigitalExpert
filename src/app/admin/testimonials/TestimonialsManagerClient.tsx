@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Testimonial } from "@/lib/types";
-import { compressImage } from "@/lib/imageCompression";
+import { uploadImageAndGetMediaUrl } from "@/lib/imageCompression";
 import MediaPickerModal from "@/components/admin/MediaPickerModal";
 import {
   Plus,
@@ -29,26 +29,6 @@ export default function TestimonialsManagerClient({
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
   const [mediaPickerTarget, setMediaPickerTarget] = useState<"screenshot" | "photo" | null>(null);
-
-  const saveUploadToMediaLibrary = (url: string, fileName: string) => {
-    fetch("/api/admin/data", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "save",
-        collection: "media",
-        item: {
-          id: `med-${Date.now()}`,
-          name: fileName,
-          url,
-          size: Math.round((url.length * 3) / 4),
-          mimeType: "image/jpeg",
-          altText: fileName,
-          uploadedAt: new Date().toISOString(),
-        },
-      }),
-    }).catch(() => {});
-  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -216,7 +196,8 @@ export default function TestimonialsManagerClient({
                         src={t.photo}
                         alt={t.name}
                         fill
-                        unoptimized={t.photo.startsWith("data:")}
+                        sizes="36px"
+                        unoptimized={t.photo.startsWith("data:") || t.photo.startsWith("/api/")}
                         className="object-cover"
                       />
                     ) : (
@@ -388,9 +369,8 @@ export default function TestimonialsManagerClient({
                       const file = e.target.files?.[0];
                       if (!file) return;
                       try {
-                        const optimizedUrl = await compressImage(file, 1200, 0.85);
-                        setEditingItem((prev) => (prev ? { ...prev, screenshot: optimizedUrl } : null));
-                        saveUploadToMediaLibrary(optimizedUrl, file.name);
+                        const result = await uploadImageAndGetMediaUrl(file, 1000, 0.8);
+                        setEditingItem((prev) => (prev ? { ...prev, screenshot: result.url } : null));
                       } catch (err: any) {
                         alert("Screenshot compression error: " + err.message);
                       }
@@ -433,7 +413,8 @@ export default function TestimonialsManagerClient({
                         src={editingItem.photo}
                         alt="Preview"
                         fill
-                        unoptimized={editingItem.photo.startsWith("data:")}
+                        sizes="48px"
+                        unoptimized={editingItem.photo.startsWith("data:") || editingItem.photo.startsWith("/api/")}
                         className="object-cover"
                       />
                     </div>
@@ -450,9 +431,8 @@ export default function TestimonialsManagerClient({
                       const file = e.target.files?.[0];
                       if (!file) return;
                       try {
-                        const optimizedUrl = await compressImage(file, 400, 0.85);
-                        setEditingItem((prev) => (prev ? { ...prev, photo: optimizedUrl } : null));
-                        saveUploadToMediaLibrary(optimizedUrl, file.name);
+                        const result = await uploadImageAndGetMediaUrl(file, 400, 0.82);
+                        setEditingItem((prev) => (prev ? { ...prev, photo: result.url } : null));
                       } catch (err: any) {
                         alert("Image compression error: " + err.message);
                       }

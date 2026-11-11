@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Course } from "@/lib/types";
-import { compressImage } from "@/lib/imageCompression";
+import { uploadImageAndGetMediaUrl } from "@/lib/imageCompression";
 import MediaPickerModal from "@/components/admin/MediaPickerModal";
 import { Plus, Edit2, Trash2, Check, X, Clock, ExternalLink, Upload, Image as ImageIcon } from "lucide-react";
 
@@ -13,26 +13,6 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
   const [isNew, setIsNew] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showMediaPicker, setShowMediaPicker] = useState(false);
-
-  const saveUploadToMediaLibrary = (url: string, fileName: string) => {
-    fetch("/api/admin/data", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "save",
-        collection: "media",
-        item: {
-          id: `med-${Date.now()}`,
-          name: fileName,
-          url,
-          size: Math.round((url.length * 3) / 4),
-          mimeType: "image/jpeg",
-          altText: fileName,
-          uploadedAt: new Date().toISOString(),
-        },
-      }),
-    }).catch(() => {});
-  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,7 +125,13 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
           <div key={c.id} className="bg-white rounded-2xl border-2 border-de-black shadow-hard overflow-hidden flex flex-col justify-between">
             <div>
               <div className="relative aspect-[16/10] w-full bg-de-warm border-b border-de-border">
-                <Image src={c.image} alt={c.title} fill className="object-cover" />
+                <Image
+                src={c.image}
+                alt={c.title}
+                fill
+                unoptimized={c.image.startsWith("data:") || c.image.startsWith("/api/")}
+                className="object-cover"
+              />
                 <span className="absolute top-3 left-3 bg-de-black text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">
                   {c.level}
                 </span>
@@ -318,7 +304,7 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
                         src={editingCourse.image}
                         alt="Preview"
                         fill
-                        unoptimized={editingCourse.image.startsWith("data:")}
+                        unoptimized={editingCourse.image.startsWith("data:") || editingCourse.image.startsWith("/api/")}
                         className="object-cover"
                       />
                     </div>
@@ -336,9 +322,8 @@ export default function CoursesManagerClient({ initialCourses }: { initialCourse
                       const file = e.target.files?.[0];
                       if (!file) return;
                       try {
-                        const optimizedUrl = await compressImage(file, 1200, 0.82);
-                        setEditingCourse((prev) => (prev ? { ...prev, image: optimizedUrl } : null));
-                        saveUploadToMediaLibrary(optimizedUrl, file.name);
+                        const { url } = await uploadImageAndGetMediaUrl(file, 1000, 0.78);
+                        setEditingCourse((prev) => (prev ? { ...prev, image: url } : null));
                       } catch (err: any) {
                         alert("Image processing error: " + err.message);
                       }

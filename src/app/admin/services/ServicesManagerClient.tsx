@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Service, ServicePackage } from "@/lib/types";
-import { compressImage } from "@/lib/imageCompression";
+import { uploadImageAndGetMediaUrl } from "@/lib/imageCompression";
 import MediaPickerModal from "@/components/admin/MediaPickerModal";
 import { Edit2, ExternalLink, CheckCircle2, Upload, Image as ImageIcon } from "lucide-react";
 
@@ -12,26 +12,6 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [saving, setSaving] = useState(false);
   const [showMediaPicker, setShowMediaPicker] = useState(false);
-
-  const saveUploadToMediaLibrary = (url: string, fileName: string) => {
-    fetch("/api/admin/data", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "save",
-        collection: "media",
-        item: {
-          id: `med-${Date.now()}`,
-          name: fileName,
-          url,
-          size: Math.round((url.length * 3) / 4),
-          mimeType: "image/jpeg",
-          altText: fileName,
-          uploadedAt: new Date().toISOString(),
-        },
-      }),
-    }).catch(() => {});
-  };
 
   const handlePackagePriceChange = (pkgId: string, newPrice: number) => {
     if (!selectedService) return;
@@ -91,7 +71,13 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
           <div key={s.id} className="bg-white rounded-2xl border-2 border-de-black shadow-hard overflow-hidden flex flex-col justify-between">
             <div>
               <div className="relative aspect-[16/10] w-full bg-de-warm border-b border-de-border">
-                <Image src={s.image} alt={s.name} fill className="object-cover" />
+                <Image
+                  src={s.image}
+                  alt={s.name}
+                  fill
+                  unoptimized={s.image.startsWith("data:") || s.image.startsWith("/api/")}
+                  className="object-cover"
+                />
               </div>
 
               <div className="p-5 space-y-3">
@@ -177,7 +163,7 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
                         src={selectedService.image}
                         alt="Preview"
                         fill
-                        unoptimized={selectedService.image.startsWith("data:")}
+                        unoptimized={selectedService.image.startsWith("data:") || selectedService.image.startsWith("/api/")}
                         className="object-cover"
                       />
                     </div>
@@ -195,9 +181,8 @@ export default function ServicesManagerClient({ initialServices }: { initialServ
                       const file = e.target.files?.[0];
                       if (!file) return;
                       try {
-                        const optimizedUrl = await compressImage(file, 1200, 0.82);
-                        setSelectedService((prev) => (prev ? { ...prev, image: optimizedUrl } : null));
-                        saveUploadToMediaLibrary(optimizedUrl, file.name);
+                        const { url } = await uploadImageAndGetMediaUrl(file, 1000, 0.78);
+                        setSelectedService((prev) => (prev ? { ...prev, image: url } : null));
                       } catch (err: any) {
                         alert("Image processing error: " + err.message);
                       }

@@ -103,6 +103,8 @@ export default async function ServicesPage() {
                       src={service.image}
                       alt={`${service.name} illustration`}
                       fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      unoptimized={service.image.startsWith("data:") || service.image.startsWith("/api/")}
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     {/* Floating Round Icon Badge */}

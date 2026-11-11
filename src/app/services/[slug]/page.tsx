@@ -298,6 +298,9 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
                     src={service.image}
                     alt={service.name}
                     fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    unoptimized={service.image.startsWith("data:") || service.image.startsWith("/api/")}
                     className="object-cover"
                   />
                 </div>

@@ -95,7 +95,7 @@ export default function ProjectsManagerClient({ initialProjects }: { initialProj
           <div key={p.id} className="bg-white rounded-2xl border-2 border-de-black shadow-hard overflow-hidden flex flex-col justify-between">
             <div>
               <div className="relative aspect-[16/10] w-full bg-de-warm border-b border-de-border">
-                <Image src={p.image} alt={p.title} fill className="object-cover" />
+                <Image src={p.image} alt={p.title} fill sizes="(max-width: 768px) 100vw, 33vw" unoptimized={p.image.startsWith("data:") || p.image.startsWith("/api/")} className="object-cover" />
                 <span className="absolute top-3 left-3 bg-de-black text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">
                   {p.category}
                 </span>
@@ -204,7 +204,7 @@ export default function ProjectsManagerClient({ initialProjects }: { initialProj
                   />
                   {editingProject.image && (
                     <div className="relative w-12 h-10 rounded border border-de-black overflow-hidden shrink-0">
-                      <Image src={editingProject.image} alt="Preview" fill className="object-cover" />
+                      <Image src={editingProject.image} alt="Preview" fill sizes="48px" unoptimized={editingProject.image.startsWith("data:") || editingProject.image.startsWith("/api/")} className="object-cover" />
                     </div>
                   )}
                 </div>

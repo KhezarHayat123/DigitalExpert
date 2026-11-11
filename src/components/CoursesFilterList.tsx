@@ -83,6 +83,8 @@ export default function CoursesFilterList({ initialCourses }: { initialCourses: 
                   src={course.image}
                   alt={`${course.title} illustration`}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  unoptimized={course.image.startsWith("data:") || course.image.startsWith("/api/")}
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute top-3 left-3 bg-de-black text-white text-[11px] font-heading font-extrabold px-3 py-1 rounded-full border border-white/20">

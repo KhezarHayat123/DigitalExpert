@@ -139,6 +139,8 @@ export default function DashboardClient({
                         src={course.image}
                         alt={course.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        unoptimized={course.image.startsWith("data:") || course.image.startsWith("/api/")}
                         className="object-cover"
                       />
                       <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-de-black text-white text-[10px] font-heading font-extrabold uppercase">
